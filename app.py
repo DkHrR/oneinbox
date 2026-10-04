@@ -305,205 +305,225 @@ def create_app():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneInbox | Morning Digest</title>
+    <title>OneInbox | Colorful Morning</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        background: 'var(--bg)',
-                        surface: 'var(--surface)',
-                        border: 'var(--border)',
-                        textMain: 'var(--text-main)',
-                        textMuted: 'var(--text-muted)'
-                    }
-                }
-            }
-        }
-    </script>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            /* Warm Cream / Paper Aesthetic */
-            --bg: #fcfbf8;           /* Beautiful soft cream background */
-            --surface: #ffffff;      /* Pure white cards */
-            --border: #e5e5e0;       /* Soft warm border */
-            --text-main: #292524;    /* Stone-800 (warm dark gray instead of harsh black) */
-            --text-muted: #78716c;   /* Stone-500 */
+            --bg-main: #fdfbf7;
+            --sidebar: #0f172a; /* Deep Slate */
         }
 
         body {
-            font-family: 'Inter', sans-serif;
-            background-color: var(--bg);
-            color: var(--text-main);
+            font-family: 'Outfit', sans-serif;
+            background-color: var(--bg-main);
+            color: #1e293b;
             -webkit-font-smoothing: antialiased;
         }
 
-        /* Minimal scrollbar */
-        ::-webkit-scrollbar { width: 4px; height: 4px; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+
+        /* Colorful Gradient Cards */
+        .card-urgent {
+            background: linear-gradient(135deg, #fff1f2 0%, #ffedd5 100%);
+            border: 1px solid #fecdd3;
+            box-shadow: 0 4px 15px rgba(225, 29, 72, 0.05);
+        }
+        .card-urgent:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(225, 29, 72, 0.15);
+            border-color: #fda4af;
+        }
+
+        .card-look {
+            background: linear-gradient(135deg, #eff6ff 0%, #e0e7ff 100%);
+            border: 1px solid #bfdbfe;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.05);
+        }
+        .card-look:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(59, 130, 246, 0.15);
+            border-color: #93c5fd;
+        }
+
+        .card-fyi {
+            background: linear-gradient(135deg, #f0fdfa 0%, #ecfdf5 100%);
+            border: 1px solid #a7f3d0;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.05);
+        }
+        .card-fyi:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: 0 12px 25px rgba(16, 185, 129, 0.15);
+            border-color: #6ee7b7;
+        }
 
         .app-card {
-            background-color: var(--surface);
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.03);
+            border-radius: 20px;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 100%;
         }
-        
-        .app-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.08);
-            border-color: #d6d3d1;
-        }
 
-        .btn-action {
+        /* Fun Buttons */
+        .btn {
             font-size: 0.75rem;
-            font-weight: 500;
-            padding: 8px 12px;
-            border-radius: 8px;
-            background: #f5f5f4;
-            border: 1px solid #e7e5e4;
-            color: var(--text-main);
+            font-weight: 600;
+            padding: 10px 16px;
+            border-radius: 12px;
             transition: all 0.2s;
             text-align: center;
-        }
-        .btn-action:hover {
-            background: #e7e5e4;
+            background: rgba(255,255,255,0.6);
+            backdrop-filter: blur(4px);
         }
         
-        .btn-primary {
-            background: var(--text-main);
-            color: #fff;
-            border-color: var(--text-main);
-        }
-        .btn-primary:hover {
-            background: #44403c;
-        }
+        .btn-urgent { color: #be123c; border: 1px solid #fda4af; }
+        .btn-urgent:hover { background: #be123c; color: #fff; }
+        
+        .btn-look { color: #4338ca; border: 1px solid #a5b4fc; }
+        .btn-look:hover { background: #4338ca; color: #fff; }
 
-        .nav-item {
+        .btn-fyi { color: #047857; border: 1px solid #6ee7b7; }
+        .btn-fyi:hover { background: #047857; color: #fff; }
+
+        /* Sidebar Items */
+        .sidebar-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 8px 12px;
-            border-radius: 8px;
-            color: var(--text-muted);
-            font-size: 0.875rem;
+            padding: 10px 14px;
+            border-radius: 12px;
+            color: #94a3b8;
+            font-size: 0.9rem;
             font-weight: 500;
             transition: all 0.2s;
         }
-        .nav-item:hover, .nav-item.active {
-            background: #f5f5f4;
-            color: var(--text-main);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
-            border: 1px solid var(--border);
+        .sidebar-item:hover {
+            background: rgba(255,255,255,0.1);
+            color: #fff;
         }
-        .nav-item { border: 1px solid transparent; }
         
-        .category-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
+        /* Glass Header */
+        .glass-header {
+            background: rgba(253, 251, 247, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.05);
         }
-
-        .color-urgent { background-color: #f43f5e; }
-        .color-look { background-color: #6366f1; }
-        .color-fyi { background-color: #14b8a6; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
 
-    <!-- Left Sidebar -->
-    <aside class="w-64 border-r border-border bg-background flex flex-col h-full hidden md:flex shrink-0">
-        <div class="p-6 pb-2">
-            <h1 class="text-xl font-semibold tracking-tight mb-1">OneInbox</h1>
-            <div class="text-xs textMuted">Your morning digest.</div>
+    <!-- Premium Dark Sidebar -->
+    <aside class="w-72 bg-[#0f172a] text-white flex flex-col h-full hidden md:flex shrink-0 shadow-2xl z-20 relative">
+        <!-- Colorful accent line at top -->
+        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-rose-400 via-blue-400 to-emerald-400"></div>
+        
+        <div class="p-8 pb-4">
+            <h1 class="text-3xl font-bold tracking-tight mb-1 bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent">OneInbox.</h1>
+            <div class="text-xs text-slate-400 font-medium tracking-wide uppercase">Intelligence Digest</div>
         </div>
         
-        <nav class="flex-1 px-4 space-y-1 overflow-y-auto mt-6">
-            <div class="text-[10px] uppercase tracking-widest textMuted font-semibold px-3 mb-2">Categories</div>
-            <a href="#action-required" class="nav-item">
-                <span class="category-dot color-urgent"></span> Action Required
-                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.must_act|length }}</span>
+        <nav class="flex-1 px-4 space-y-2 overflow-y-auto mt-8">
+            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-4 mb-3">Today's Categories</div>
+            
+            <a href="#action-required" class="sidebar-item group">
+                <div class="w-8 h-8 rounded-lg bg-rose-500/20 text-rose-400 flex items-center justify-center group-hover:bg-rose-500 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                Action Required
+                <span class="ml-auto text-[11px] bg-rose-500 text-white font-bold px-2.5 py-1 rounded-full shadow-[0_0_10px_rgba(244,63,94,0.5)]">{{ digest.must_act|length }}</span>
             </a>
-            <a href="#worth-look" class="nav-item">
-                <span class="category-dot color-look"></span> Worth a Look
-                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.worth_a_look|length }}</span>
+            
+            <a href="#worth-look" class="sidebar-item group">
+                <div class="w-8 h-8 rounded-lg bg-blue-500/20 text-blue-400 flex items-center justify-center group-hover:bg-blue-500 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M11.049 2.927c.3-.921 1.603-.921 1.902 0l1.519 4.674a1 1 0 00.95.69h4.915c.969 0 1.371 1.24.588 1.81l-3.976 2.888a1 1 0 00-.363 1.118l1.518 4.674c.3.922-.755 1.688-1.538 1.118l-3.976-2.888a1 1 0 00-1.176 0l-3.976 2.888c-.783.57-1.838-.197-1.538-1.118l1.518-4.674a1 1 0 00-.363-1.118l-3.976-2.888c-.784-.57-.38-1.81.588-1.81h4.914a1 1 0 00.951-.69l1.519-4.674z"></path></svg>
+                </div>
+                Worth a Look
+                <span class="ml-auto text-[11px] bg-slate-800 text-slate-300 font-bold px-2.5 py-1 rounded-full">{{ digest.worth_a_look|length }}</span>
             </a>
-            <a href="#fyi" class="nav-item">
-                <span class="category-dot color-fyi"></span> FYI
-                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.fyi|length }}</span>
+            
+            <a href="#fyi" class="sidebar-item group">
+                <div class="w-8 h-8 rounded-lg bg-emerald-500/20 text-emerald-400 flex items-center justify-center group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                    <svg class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                </div>
+                For Your Info
+                <span class="ml-auto text-[11px] bg-slate-800 text-slate-300 font-bold px-2.5 py-1 rounded-full">{{ digest.fyi|length }}</span>
             </a>
         </nav>
 
-        <div class="p-6 border-t border-border">
-            <div class="flex items-center gap-2 text-xs font-medium textMuted">
-                <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span> Backboard Sync Active
+        <div class="p-8 border-t border-slate-800">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-full bg-gradient-to-br from-indigo-500 to-purple-500 flex items-center justify-center shadow-lg shadow-indigo-500/30">
+                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                </div>
+                <div>
+                    <div class="text-sm font-semibold text-white">Backboard</div>
+                    <div class="text-[10px] text-emerald-400 font-medium">Memory Sync Active</div>
+                </div>
             </div>
         </div>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden bg-background">
+    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
         
-        <!-- Top Header -->
-        <header class="h-16 border-b border-border bg-surface/50 backdrop-blur-md flex items-center justify-between px-8 shrink-0 z-10 sticky top-0">
-            <div class="text-xs font-medium textMuted">{{ digest.generated_at }}</div>
-            <div class="px-3 py-1.5 rounded-full bg-white border border-border shadow-sm text-xs font-medium textMain">
+        <!-- Glass Header -->
+        <header class="h-20 glass-header flex items-center justify-between px-8 shrink-0 z-10 sticky top-0">
+            <div>
+                <h2 class="text-xl font-bold text-slate-800">Good morning.</h2>
+                <div class="text-xs font-medium text-slate-500 mt-0.5">Generated {{ digest.generated_at }}</div>
+            </div>
+            <div class="px-4 py-2 rounded-xl bg-white border border-slate-200 shadow-sm text-sm font-bold text-slate-700 flex items-center gap-2">
+                <div class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></div>
                 {{ digest.total_count }} Emails Analyzed
             </div>
         </header>
 
         <!-- Scrollable Grid Area -->
-        <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth">
+        <div class="flex-1 overflow-y-auto p-8 lg:p-12 scroll-smooth">
             
             {% if digest.mode == 'Demo (Sample Emails)' %}
-            <div class="mb-8 border border-amber-200/50 bg-amber-50 rounded-xl p-3 text-amber-700 text-xs font-medium flex items-center justify-center">
-                Demo Mode: Viewing synthetic sample emails
+            <div class="mb-10 bg-gradient-to-r from-amber-100 to-orange-100 border border-amber-200 rounded-2xl p-4 text-amber-800 text-sm font-bold flex items-center justify-center shadow-sm">
+                🚧 Demo Mode: Viewing synthetic archived sample emails.
             </div>
             {% endif %}
 
-            <!-- Welcome Banner -->
-            <div class="mb-12">
-                <h2 class="text-3xl font-medium tracking-tight mb-2 text-stone-800">Good morning.</h2>
-                <p class="textMuted max-w-2xl text-sm leading-relaxed">You have <strong class="textMain">{{ digest.must_act|length }} tasks</strong> requiring attention and <strong class="textMain">{{ digest.worth_a_look|length }} updates</strong> worth reading today. The rest has been filtered.</p>
-            </div>
-
             {% if digest.must_act %}
-            <div id="action-required" class="mb-12">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="w-2.5 h-2.5 rounded-full color-urgent"></span>
-                    <h3 class="text-lg font-medium textMain">Action Required</h3>
+            <div id="action-required" class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <h3 class="text-2xl font-bold text-rose-600">Action Required</h3>
+                    <div class="h-px flex-1 bg-gradient-to-r from-rose-200 to-transparent"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     {% for item in digest.must_act %}
-                    <div class="app-card">
-                        <div class="p-6 flex-1 flex flex-col">
-                            <div class="flex justify-between items-start mb-3">
-                                <div class="text-[10px] font-semibold textMuted uppercase tracking-wider">{{ item.from }}</div>
-                                {% if item.deadline %}
-                                <div class="bg-rose-50 text-rose-600 px-2 py-0.5 rounded text-[10px] font-semibold border border-rose-100">
-                                    Due: {{ item.deadline }}
-                                </div>
-                                {% endif %}
+                    <div class="app-card card-urgent">
+                        <div class="p-6 lg:p-8 flex-1 flex flex-col">
+                            <div class="flex justify-between items-start mb-4">
+                                <div class="text-[11px] font-bold text-rose-500 uppercase tracking-widest bg-white/50 px-3 py-1 rounded-full shadow-sm">{{ item.from }}</div>
                             </div>
-                            <h4 class="text-base font-semibold textMain mb-2 leading-snug">{{ item.subject }}</h4>
-                            <p class="text-sm textMuted leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3 leading-snug">{{ item.subject }}</h4>
                             
-                            <div class="text-[11px] textMuted bg-[#f5f5f4] p-2.5 rounded-lg border border-border mb-5">
-                                <strong>Reason:</strong> {{ item.why }}
+                            {% if item.deadline %}
+                            <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500 text-white text-xs font-bold mb-4 shadow-sm w-max">
+                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                                Due: {{ item.deadline }}
+                            </div>
+                            {% endif %}
+                            
+                            <p class="text-sm font-medium text-slate-700 leading-relaxed mb-5 flex-1">{{ item.summary }}</p>
+                            
+                            <div class="text-[11px] font-medium text-rose-800 bg-white/60 p-3 rounded-xl border border-white/50 mb-6 shadow-sm">
+                                <strong class="text-rose-900 font-bold">Why:</strong> {{ item.why }}
                             </div>
                             
-                            <div class="grid grid-cols-2 gap-2 mt-auto">
-                                <a href="{{ item.ignore_link }}" class="btn-action col-span-2">Ignore Sender</a>
-                                <a href="{{ item.good_link }}" class="btn-action btn-primary">Accurate</a>
-                                <a href="{{ item.wrong_link }}" class="btn-action bg-white">Wrong</a>
+                            <div class="grid grid-cols-2 gap-3 mt-auto">
+                                <a href="{{ item.ignore_link }}" class="btn btn-urgent col-span-2">Silence Sender</a>
+                                <a href="{{ item.good_link }}" class="btn btn-urgent !bg-white">Accurate ✓</a>
+                                <a href="{{ item.wrong_link }}" class="btn btn-urgent !bg-white">Wrong ✕</a>
                             </div>
                         </div>
                     </div>
@@ -513,24 +533,24 @@ def create_app():
             {% endif %}
 
             {% if digest.worth_a_look %}
-            <div id="worth-look" class="mb-12">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="w-2.5 h-2.5 rounded-full color-look"></span>
-                    <h3 class="text-lg font-medium textMain">Worth a Look</h3>
+            <div id="worth-look" class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <h3 class="text-2xl font-bold text-blue-600">Worth a Look</h3>
+                    <div class="h-px flex-1 bg-gradient-to-r from-blue-200 to-transparent"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
                     {% for item in digest.worth_a_look %}
-                    <div class="app-card">
-                        <div class="p-6 flex-1 flex flex-col">
-                            <div class="text-[10px] font-semibold textMuted uppercase tracking-wider mb-3">{{ item.from }}</div>
-                            <h4 class="text-base font-semibold textMain mb-2 leading-snug">{{ item.subject }}</h4>
-                            <p class="text-sm textMuted leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
+                    <div class="app-card card-look">
+                        <div class="p-6 lg:p-8 flex-1 flex flex-col">
+                            <div class="text-[11px] font-bold text-blue-500 uppercase tracking-widest bg-white/50 w-max px-3 py-1 rounded-full shadow-sm mb-4">{{ item.from }}</div>
+                            <h4 class="text-xl font-bold text-slate-900 mb-3 leading-snug">{{ item.subject }}</h4>
+                            <p class="text-sm font-medium text-slate-700 leading-relaxed mb-5 flex-1">{{ item.summary }}</p>
                             
-                            <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-border">
-                                <a href="{{ item.always_link }}" class="btn-action">Always Show</a>
-                                <a href="{{ item.ignore_link }}" class="btn-action">Ignore</a>
-                                <a href="{{ item.good_link }}" class="btn-action col-span-2 btn-primary mt-1">Accurate Classification</a>
+                            <div class="grid grid-cols-2 gap-3 mt-auto pt-6 border-t border-blue-200/50">
+                                <a href="{{ item.always_link }}" class="btn btn-look !bg-white">Always Show</a>
+                                <a href="{{ item.ignore_link }}" class="btn btn-look">Ignore</a>
+                                <a href="{{ item.good_link }}" class="btn btn-look col-span-2 !bg-blue-600 !text-white hover:!bg-blue-700">Perfect Classification ✓</a>
                             </div>
                         </div>
                     </div>
@@ -540,22 +560,22 @@ def create_app():
             {% endif %}
 
             {% if digest.fyi %}
-            <div id="fyi" class="mb-12">
-                <div class="flex items-center gap-3 mb-6">
-                    <span class="w-2.5 h-2.5 rounded-full color-fyi"></span>
-                    <h3 class="text-lg font-medium textMain">For Your Information</h3>
+            <div id="fyi" class="mb-16">
+                <div class="flex items-center gap-4 mb-8">
+                    <h3 class="text-2xl font-bold text-emerald-600">For Your Information</h3>
+                    <div class="h-px flex-1 bg-gradient-to-r from-emerald-200 to-transparent"></div>
                 </div>
                 
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-5">
                     {% for item in digest.fyi %}
-                    <div class="app-card p-5">
-                        <div class="text-[10px] font-semibold textMuted uppercase tracking-wider mb-2 truncate">{{ item.from }}</div>
-                        <h4 class="text-sm font-semibold textMain mb-2 line-clamp-1">{{ item.subject }}</h4>
-                        <p class="text-xs textMuted leading-relaxed mb-4 line-clamp-2 flex-1">{{ item.summary }}</p>
+                    <div class="app-card card-fyi p-5 lg:p-6">
+                        <div class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 truncate">{{ item.from }}</div>
+                        <h4 class="text-base font-bold text-slate-900 mb-2 line-clamp-1">{{ item.subject }}</h4>
+                        <p class="text-xs font-medium text-slate-600 leading-relaxed mb-5 flex-1 line-clamp-3">{{ item.summary }}</p>
                         
-                        <div class="flex gap-2 mt-auto border-t border-border pt-3">
-                            <a href="{{ item.always_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-[#f5f5f4] py-1.5 rounded transition-colors">Always Show</a>
-                            <a href="{{ item.ignore_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-[#f5f5f4] py-1.5 rounded transition-colors">Ignore</a>
+                        <div class="flex gap-2 mt-auto">
+                            <a href="{{ item.always_link }}" class="btn btn-fyi flex-1 text-[10px] !py-2 !px-2">Always</a>
+                            <a href="{{ item.ignore_link }}" class="btn btn-fyi flex-1 text-[10px] !py-2 !px-2 !bg-white hover:!bg-emerald-600 hover:!text-white">Ignore</a>
                         </div>
                     </div>
                     {% endfor %}
