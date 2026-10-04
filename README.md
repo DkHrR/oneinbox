@@ -2,9 +2,9 @@
 
 OneInbox is an intelligent, privacy-first daily email digest assistant powered by a fine-tuned Qwen3.5-4B model and persistent memory via Backboard.
 
-- 📄 **Sample Digest**: See [docs/sample_digest.md](docs/sample_digest.md) for a sample digest output.
+- 📄 **Sample Digest for Judges**: See [docs/sample_digest.md](docs/sample_digest.md) for a complete run output.
 - 🤗 **Hugging Face Model**: [`<HF_USERNAME>/oneinbox-qwen3.5-4b-lora`](https://huggingface.co/<HF_USERNAME>/oneinbox-qwen3.5-4b-lora)
-- ⚠️ **Requirement**: Demo mode needs your own TINKER_API_KEY and a copy of the adapter weights.
+- ℹ️ **Demo Note**: The live demo uses the author's private Tinker checkpoint. Judges can read [docs/sample_digest.md](docs/sample_digest.md), and the adapter weights are on Hugging Face for self-hosting.
 
 It categorizes incoming emails into four actionable tiers:
 - 🚨 **must_act**: Urgent action required (bills, critical deadlines, confirmations, security notices)
@@ -65,7 +65,7 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run Daily Digest in Demo Mode
-> Demo mode needs your own TINKER_API_KEY and a copy of the adapter weights.
+> **Note**: The live demo uses the author's private Tinker checkpoint. Judges can read [docs/sample_digest.md](docs/sample_digest.md), and the adapter weights are on Hugging Face for self-hosting.
 
 ```bash
 # Preview digest summary counts
@@ -108,8 +108,9 @@ python app.py --imap --dry-run
 
 ---
 
-## Honest Limitations
+## Known limits
 
+- **Backboard Memory Capacity**: Backboard memories have a character limit of 4,000 characters. With compressed JSON snapshots averaging ~128 stored characters per email (measured from the real 25-email run at 3,194 characters), approximately **31 real emails** fit under the 4,000 limit before snapshot capacity is reached.
 - **Synthetic Validation Dataset**: The training set and validation benchmark (`data/val.jsonl`) consist of synthetic emails designed to capture distribution shifts, deadlines, and urgency phrasing. The 96.67% accuracy was measured against this synthetic distribution.
 - **IMAP Pipeline Untested on Live Inboxes**: While the IMAP pipeline implements standard RFC822 parsing, PII redaction, and read-only fetching, it has not yet been benchmarked on a live production inbox with complex HTML multipart layouts.
 - **Fine-Tuned Pricing Model**: The Tinker documentation rate card (`https://tinker-docs.thinkingmachines.ai/tinker/models/index.md`) lists base model rates for Qwen3.5-4B ($0.33/M prompt, $1.005/M sample) but does not list a separate rate for sampling a fine-tuned LoRA checkpoint. Evaluation and usage costs for the fine-tuned model are computed assuming the base model rate.
