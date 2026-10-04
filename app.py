@@ -305,218 +305,197 @@ def create_app():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneInbox | Intelligence Digest</title>
+    <title>OneInbox</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #030305;
+            background-color: #000000;
+            color: #ffffff;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        /* Ultra-minimal scrollbar */
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #222; border-radius: 4px; }
+
+        .minimal-card {
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-radius: 16px;
+            transition: border-color 0.3s ease, background 0.3s ease;
+        }
+
+        .minimal-card:hover {
+            border-color: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .btn-minimal {
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            font-weight: 500;
+            padding: 6px 12px;
+            border-radius: 99px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.2s;
+            text-decoration: none;
+        }
+        .btn-minimal:hover {
             color: #fff;
-            overflow-x: hidden;
+            border-color: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.05);
         }
 
-        /* Ambient Glowing Background */
-        .ambient-bg {
-            position: fixed;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
-                        radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0) 40%);
-            z-index: -1;
-            pointer-events: none;
+        .nav-blur {
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
         }
-
-        /* Glassmorphism Cards */
-        .glass-card {
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
-            transition: transform 0.2s ease, border-color 0.2s ease;
-        }
-
-        .glass-card:hover {
-            transform: translateY(-2px);
-            border-color: rgba(255, 255, 255, 0.15);
-        }
-
-        .glass-nav {
-            background: rgba(10, 10, 15, 0.6);
-            backdrop-filter: blur(24px);
-            -webkit-backdrop-filter: blur(24px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-
-        .text-gradient {
-            background: linear-gradient(to right, #fff, #9ca3af);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        /* Custom scrollbar */
-        ::-webkit-scrollbar { width: 8px; }
-        ::-webkit-scrollbar-track { background: #000; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-<body class="antialiased selection:bg-blue-500/30 pb-20">
+<body class="selection:bg-white/20 pb-32">
 
-    <div class="ambient-bg"></div>
-
-    <!-- Sticky Glass Header -->
-    <nav class="fixed top-0 w-full z-50 glass-nav">
-        <div class="max-w-3xl mx-auto px-6 py-4">
-            <div class="flex justify-between items-center mb-4">
-                <div class="text-xl font-semibold tracking-tight text-gradient">OneInbox<span class="text-blue-500">.</span></div>
-                <div class="text-xs text-gray-500 font-medium bg-white/5 px-3 py-1 rounded-full border border-white/5">
-                    {{ digest.generated_at }}
-                </div>
+    <!-- Sticky Ultra-minimal Nav -->
+    <nav class="fixed top-0 w-full z-50 nav-blur">
+        <div class="max-w-2xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="text-sm font-medium tracking-tight text-white/90">OneInbox</div>
+            <div class="text-[11px] uppercase tracking-widest text-white/40">{{ digest.generated_at }}</div>
+        </div>
+        <div class="max-w-2xl mx-auto px-6 pb-4 flex gap-4 overflow-x-auto no-scrollbar">
+            <div class="flex items-center gap-2 text-xs font-medium text-white/60">
+                <span class="dot" style="background: #ef4444; box-shadow: 0 0 10px #ef4444;"></span>
+                {{ digest.must_act|length }} Action Required
             </div>
-            
-            {% if digest.mode == 'Demo (Sample Emails)' %}
-            <div class="w-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-4 py-2 rounded-lg mb-4 flex items-center justify-center">
-                Demo Mode: Displaying 25 archived sample emails
+            <div class="flex items-center gap-2 text-xs font-medium text-white/60">
+                <span class="dot" style="background: #3b82f6;"></span>
+                {{ digest.worth_a_look|length }} Worth a Look
             </div>
-            {% endif %}
-
-            <!-- Stats Row -->
-            <div class="flex flex-wrap gap-2 text-xs font-medium">
-                <div class="px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
-                    {{ digest.must_act|length }} Action Required
-                </div>
-                <div class="px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
-                    {{ digest.worth_a_look|length }} Worth a Look
-                </div>
-                <div class="px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-2">
-                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
-                    {{ digest.fyi|length }} FYI
-                </div>
-                <div class="px-3 py-1.5 rounded-full bg-gray-500/10 border border-gray-500/20 text-gray-400">
-                    {{ digest.noise_count }} Noise
-                </div>
+            <div class="flex items-center gap-2 text-xs font-medium text-white/60">
+                <span class="dot" style="background: #10b981;"></span>
+                {{ digest.fyi|length }} FYI
             </div>
         </div>
     </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-3xl mx-auto px-6 pt-48 md:pt-40">
-        
-        {% if digest.pinned %}
-        <div class="mb-12">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-emerald-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
-                Pinned Rules
-            </h2>
-            <div class="space-y-4">
-                {% for item in digest.pinned %}
-                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-500">
-                    <div class="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">{{ item.from }}</div>
-                    <div class="text-lg font-semibold text-white mb-2">{{ item.subject }}</div>
-                    <div class="text-gray-400 text-sm leading-relaxed">{{ item.summary }}</div>
-                </div>
-                {% endfor %}
-            </div>
+    <main class="max-w-2xl mx-auto px-6 pt-36">
+
+        {% if digest.mode == 'Demo (Sample Emails)' %}
+        <div class="mb-12 border border-orange-500/20 bg-orange-500/5 rounded-xl p-4 text-orange-400/80 text-xs font-medium text-center">
+            Demo Mode Active — Displaying archived sample data
         </div>
         {% endif %}
 
+        {% if digest.pinned %}
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-widest text-white/30 font-semibold mb-6">Pinned</h2>
+            <div class="space-y-4">
+                {% for item in digest.pinned %}
+                <div class="minimal-card p-6">
+                    <div class="text-white/40 text-[11px] font-medium uppercase tracking-wider mb-2">{{ item.from }}</div>
+                    <div class="text-white/90 text-lg font-medium leading-snug mb-3">{{ item.subject }}</div>
+                    <div class="text-white/50 text-sm leading-relaxed">{{ item.summary }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
         {% if digest.must_act %}
-        <div class="mb-12">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-red-400">
-                <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
-                Action Required
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-widest text-red-500/80 font-semibold mb-6 flex items-center gap-2">
+                <span class="dot bg-red-500 shadow-[0_0_10px_#ef4444]"></span> Action Required
             </h2>
             <div class="space-y-4">
                 {% for item in digest.must_act %}
-                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-red-500 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-3xl -z-10 rounded-full"></div>
-                    <div class="text-gray-400 text-xs font-medium mb-1">{{ item.from }}</div>
-                    <div class="text-xl font-semibold text-white mb-3">{{ item.subject }}</div>
+                <div class="minimal-card p-6 relative overflow-hidden group">
+                    <div class="absolute left-0 top-0 bottom-0 w-[2px] bg-red-500/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+                    <div class="text-white/40 text-[11px] font-medium uppercase tracking-wider mb-2">{{ item.from }}</div>
+                    <div class="text-white/90 text-xl font-medium leading-tight mb-3">{{ item.subject }}</div>
                     
                     {% if item.deadline %}
-                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-red-500/20 text-red-400 text-xs font-bold mb-4">
-                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                    <div class="inline-block border border-red-500/20 bg-red-500/10 text-red-400 text-[10px] font-semibold uppercase tracking-wider px-2 py-1 rounded-md mb-4">
                         Deadline: {{ item.deadline }}
                     </div>
                     {% endif %}
                     
-                    <div class="text-gray-300 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
-                    <div class="text-gray-500 text-xs italic mb-6">AI Reason: {{ item.why }}</div>
+                    <div class="text-white/60 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
+                    <div class="text-white/30 text-xs mb-6 font-light">Because: {{ item.why }}</div>
                     
-                    <!-- Feedback Actions -->
-                    <div class="flex flex-wrap gap-3 pt-4 border-t border-white/5">
-                        <a href="{{ item.ignore_link }}" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white hover:bg-white/10 transition-colors">Ignore Sender</a>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                        <a href="{{ item.ignore_link }}" class="btn-minimal">Ignore Sender</a>
                         <div class="flex-grow"></div>
-                        <a href="{{ item.good_link }}" class="px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20 transition-colors">Accurate ✓</a>
-                        <a href="{{ item.wrong_link }}" class="px-4 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-xs font-medium text-red-400 hover:bg-red-500/20 transition-colors">Wrong ✕</a>
+                        <a href="{{ item.good_link }}" class="btn-minimal hover:!border-emerald-500/50 hover:!text-emerald-400">Accurate</a>
+                        <a href="{{ item.wrong_link }}" class="btn-minimal hover:!border-red-500/50 hover:!text-red-400">Wrong</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </section>
         {% endif %}
 
         {% if digest.worth_a_look %}
-        <div class="mb-12">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-blue-400">
-                <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
-                Worth a Look
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-widest text-blue-500/80 font-semibold mb-6 flex items-center gap-2">
+                <span class="dot bg-blue-500"></span> Worth a Look
             </h2>
             <div class="space-y-4">
                 {% for item in digest.worth_a_look %}
-                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-blue-500">
-                    <div class="text-gray-400 text-xs font-medium mb-1">{{ item.from }}</div>
-                    <div class="text-lg font-semibold text-white mb-3">{{ item.subject }}</div>
-                    <div class="text-gray-300 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
-                    <div class="text-gray-500 text-xs italic mb-6">AI Reason: {{ item.why }}</div>
+                <div class="minimal-card p-6">
+                    <div class="text-white/40 text-[11px] font-medium uppercase tracking-wider mb-2">{{ item.from }}</div>
+                    <div class="text-white/90 text-lg font-medium leading-tight mb-3">{{ item.subject }}</div>
+                    <div class="text-white/60 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
+                    <div class="text-white/30 text-xs mb-6 font-light">Because: {{ item.why }}</div>
                     
-                    <!-- Feedback Actions -->
-                    <div class="flex flex-wrap gap-3 pt-4 border-t border-white/5">
-                        <a href="{{ item.always_link }}" class="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/30 text-xs font-medium text-blue-400 hover:bg-blue-500/20 transition-colors">Always Show</a>
-                        <a href="{{ item.ignore_link }}" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white hover:bg-white/10 transition-colors">Ignore</a>
+                    <div class="flex flex-wrap gap-2 pt-4 border-t border-white/5">
+                        <a href="{{ item.always_link }}" class="btn-minimal hover:!border-blue-500/50 hover:!text-blue-400">Always Show</a>
+                        <a href="{{ item.ignore_link }}" class="btn-minimal hover:!border-red-500/50 hover:!text-red-400">Ignore</a>
                         <div class="flex-grow"></div>
-                        <a href="{{ item.good_link }}" class="px-3 py-2 rounded-lg bg-white/5 text-xs font-medium text-gray-300 hover:text-emerald-400 transition-colors">✓</a>
-                        <a href="{{ item.wrong_link }}" class="px-3 py-2 rounded-lg bg-white/5 text-xs font-medium text-gray-300 hover:text-red-400 transition-colors">✕</a>
+                        <a href="{{ item.good_link }}" class="btn-minimal hover:!border-emerald-500/50 hover:!text-emerald-400">Accurate</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </section>
         {% endif %}
 
         {% if digest.fyi %}
-        <div class="mb-12">
-            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-gray-400">
-                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                For Your Information
+        <section class="mb-16">
+            <h2 class="text-xs uppercase tracking-widest text-white/30 font-semibold mb-6 flex items-center gap-2">
+                <span class="dot bg-white/20"></span> For Your Information
             </h2>
             <div class="grid md:grid-cols-2 gap-4">
                 {% for item in digest.fyi %}
-                <div class="glass-card rounded-xl p-5 border-l-2 border-l-gray-600">
-                    <div class="text-gray-500 text-xs font-medium mb-1 truncate">{{ item.from }}</div>
-                    <div class="text-base font-semibold text-gray-200 mb-2 truncate">{{ item.subject }}</div>
-                    <div class="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">{{ item.summary }}</div>
+                <div class="minimal-card p-5">
+                    <div class="text-white/30 text-[10px] font-medium uppercase tracking-wider mb-1 truncate">{{ item.from }}</div>
+                    <div class="text-white/80 text-sm font-medium leading-snug mb-2 truncate">{{ item.subject }}</div>
+                    <div class="text-white/50 text-xs leading-relaxed line-clamp-2 mb-4">{{ item.summary }}</div>
                     
-                    <div class="flex flex-wrap gap-2 pt-3 border-t border-white/5">
-                        <a href="{{ item.always_link }}" class="text-[10px] uppercase font-bold text-blue-400 hover:text-blue-300">Always Show</a>
-                        <a href="{{ item.ignore_link }}" class="text-[10px] uppercase font-bold text-gray-500 hover:text-gray-300">Ignore</a>
-                        <div class="flex-grow"></div>
-                        <a href="{{ item.good_link }}" class="text-[10px] uppercase font-bold text-gray-500 hover:text-emerald-400">Accurate</a>
+                    <div class="flex flex-wrap gap-2">
+                        <a href="{{ item.always_link }}" class="text-[9px] uppercase tracking-widest font-semibold text-white/30 hover:text-white/80 transition-colors">Always</a>
+                        <a href="{{ item.ignore_link }}" class="text-[9px] uppercase tracking-widest font-semibold text-white/30 hover:text-red-400 transition-colors">Ignore</a>
                     </div>
                 </div>
                 {% endfor %}
             </div>
-        </div>
+        </section>
         {% endif %}
-
-        <div class="text-center mt-16 pt-8 border-t border-white/5 text-xs text-gray-600">
-            OneInbox • End-to-End AI Sorting • Secured by HMAC Feedback • Backboard Memory Active
+        
+        <div class="text-center pb-8 border-t border-white/5 pt-8">
+            <div class="text-[10px] uppercase tracking-widest text-white/20">Secured by Backboard</div>
         </div>
     </main>
 
