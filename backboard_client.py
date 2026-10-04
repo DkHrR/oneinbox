@@ -79,6 +79,17 @@ def save_digest_to_backboard(api_key: str, assistant_id: str, digest_data: dict)
     try:
         content = "DIGEST_SNAPSHOT: " + json.dumps(digest_data)
         add_memory(api_key, assistant_id, content)
+        
+        # Cleanup old snapshots
+        mems = list_memories(api_key, assistant_id)
+        snapshot_mems = [m for m in mems if m.get("content", "").startswith("DIGEST_SNAPSHOT: ")]
+        # Sort descending by created_at, keep first
+        snapshot_mems.sort(key=lambda x: x.get("created_at", ""), reverse=True)
+        for old_mem in snapshot_mems[1:]:
+            try:
+                requests.delete(f"{BASE_URL}/assistants/{assistant_id}/memories/{old_mem['id']}", headers=get_headers(api_key), timeout=10)
+            except Exception as e:
+                logger.warning(f"Failed to delete old snapshot {old_mem['id']}: {e}")
     except Exception as e:
         logger.warning(f"Could not persist digest snapshot to Backboard: {e}")
 
