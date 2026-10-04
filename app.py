@@ -16,7 +16,6 @@ from urllib.parse import urlencode, quote
 from dotenv import load_dotenv
 import requests
 
-from classify import classify_email
 from backboard_client import (
     get_or_create_assistant,
     list_memories,
@@ -173,6 +172,7 @@ def get_checkpoint_path() -> str:
 
 async def process_emails_async(emails: list[dict], rules: tuple[set[str], set[str]]) -> list[dict]:
     import tinker
+    from classify import classify_email
     checkpoint = get_checkpoint_path()
     service_client = tinker.ServiceClient()
     sampling_client = service_client.create_sampling_client(model_path=checkpoint)
@@ -742,18 +742,19 @@ def main():
         "total_count": len(classified_items),
         "items": classified_items
     }
-    base_url = os.environ.get("APP_BASE_URL", "http://localhost:5000")
-    ingest_token = os.environ.get("INGEST_TOKEN", "")
-    ingest_url = f"{base_url.rstrip('/')}/ingest"
-    
-    try:
-        resp = requests.post(ingest_url, json=digest_data, headers={"Authorization": f"Bearer {ingest_token}"}, timeout=10)
-        if resp.status_code != 200:
-            logger.error(f"Failed to POST /ingest. Status: {resp.status_code}. Response: {resp.text}")
+    if not args.dry_run:
+        base_url = os.environ.get("APP_BASE_URL", "http://localhost:5000")
+        ingest_token = os.environ.get("INGEST_TOKEN", "")
+        ingest_url = f"{base_url.rstrip('/')}/ingest"
+        
+        try:
+            resp = requests.post(ingest_url, json=digest_data, headers={"Authorization": f"Bearer {ingest_token}"}, timeout=10)
+            if resp.status_code != 200:
+                logger.error(f"Failed to POST /ingest. Status: {resp.status_code}. Response: {resp.text}")
+                sys.exit(1)
+        except Exception as e:
+            logger.error(f"Failed to POST /ingest: {e}")
             sys.exit(1)
-    except Exception as e:
-        logger.error(f"Failed to POST /ingest: {e}")
-        sys.exit(1)
 
     # 5. Digest Preview & Summary Counts
     preview_md = generate_digest_preview_md(classified_items, rules)
