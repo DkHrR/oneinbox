@@ -16,8 +16,6 @@ services:
         sync: false
       - key: TINKER_API_KEY
         sync: false
-      - key: NTFY_TOPIC
-        sync: false
       # Note: APP_BASE_URL must be set to the deployed web service URL
       - key: APP_BASE_URL
         sync: false
@@ -37,8 +35,6 @@ services:
       - key: BACKBOARD_API_KEY
         sync: false
       - key: BACKBOARD_ASSISTANT_ID
-        sync: false
-      - key: NTFY_TOPIC
         sync: false
       - key: DIGEST_TOKEN
         sync: false

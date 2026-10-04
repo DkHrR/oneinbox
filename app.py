@@ -227,59 +227,9 @@ async def process_emails_async(emails: list[dict], rules: tuple[set[str], set[st
 def run_classification_pipeline(emails: list[dict], rules: tuple[set[str], set[str]]) -> list[dict]:
     return asyncio.run(process_emails_async(emails, rules))
 
-# ── Notifications (ntfy) ───────────────────────────────────────────────────────
-
-def format_push_notification(classified_items: list[dict], digest_url: str, base_url: str) -> tuple[str, str, dict]:
-    must_act = [x for x in classified_items if x["label"] == "must_act"]
-    pinned = [x for x in classified_items if x["label"] == "pinned"]
-    worth_a_look = [x for x in classified_items if x["label"] == "worth_a_look"]
-    fyi = [x for x in classified_items if x["label"] == "fyi"]
-    noise = [x for x in classified_items if x["label"] == "noise"]
-    ignored = [x for x in classified_items if x["label"] == "ignored"]
-
-    title = f"OneInbox: {len(must_act)} need action"
-    
-    lines = []
-    for item in must_act[:5]:
-        deadline_text = item.get("deadline") or "No deadline"
-        lines.append(f"{item.get('from', '')} - {item.get('subject', '')} - {deadline_text}")
-
-    body_lines = []
-    if lines:
-        body_lines.extend(lines)
-    else:
-        body_lines.append("No urgent actions required today.")
-
-    body_lines.append("")
-    body_lines.append(f"Counts: {len(worth_a_look)} worth a look | {len(fyi)} FYI | {len(noise)} noise | {len(ignored)} ignored")
-    
-    body = "\n".join(body_lines)
-
-    headers = {
-        "Title": title,
-        "Priority": "high" if must_act else "default",
-        "Click": digest_url,
-        "Actions": f"view, Open Digest, {digest_url}; view, Web App, {base_url}",
-        "Tags": "email,inbox"
-    }
-
-    return title, body, headers
-
-def send_ntfy_push(topic: str, title: str, body: str, headers: dict) -> bool:
-    if not topic:
-        return False
-    url = f"https://ntfy.sh/{topic}"
-    req_headers = {**headers, "Title": title}
-    try:
-        res = requests.post(url, data=body.encode("utf-8"), headers=req_headers, timeout=10)
-        return res.status_code == 200
-    except Exception as e:
-        logger.error(f"Failed to publish to ntfy: {e}")
-        return False
-
 # ── Preview & Persistence ──────────────────────────────────────────────────────
 
-def generate_digest_preview_md(classified_items: list[dict], push_title: str, push_body: str, push_headers: dict, rules: tuple[set[str], set[str]], topic: str) -> str:
+def generate_digest_preview_md(classified_items: list[dict], rules: tuple[set[str], set[str]]) -> str:
     always_show, ignore = rules
     must_act = [x for x in classified_items if x["label"] == "must_act"]
     pinned = [x for x in classified_items if x["label"] == "pinned"]
@@ -296,16 +246,6 @@ def generate_digest_preview_md(classified_items: list[dict], push_title: str, pu
     md.append("## Active Preference Rules")
     md.append(f"- **Always Show**: {', '.join(sorted(always_show)) if always_show else '(none)'}")
     md.append(f"- **Ignore**: {', '.join(sorted(ignore)) if ignore else '(none)'}\n")
-
-    md.append("## ntfy Push Notification Preview")
-    md.append(f"- **Target URL**: `https://ntfy.sh/{topic or '[NTFY_TOPIC not set]'}`")
-    md.append(f"- **Title**: `{push_title}`")
-    md.append(f"- **Priority**: `{push_headers.get('Priority', 'default')}`")
-    md.append(f"- **Click Action**: `{push_headers.get('Click', '')}`")
-    md.append(f"- **Buttons**: `{push_headers.get('Actions', '')}`")
-    md.append("\n```text")
-    md.append(push_body)
-    md.append("```\n")
 
     md.append("## Categorized Digest")
 
@@ -745,7 +685,7 @@ def create_app():
 
 def main():
     parser = argparse.ArgumentParser(description="OneInbox Daily Email Intelligence Digest")
-    parser.add_argument("--dry-run", action="store_true", help="Print push notification and save digest_preview.md without sending push.")
+    parser.add_argument("--dry-run", action="store_true", help="Print digest summary counts and save digest_preview.md.")
     parser.add_argument("--imap", action="store_true", help="Fetch emails from real inbox over IMAP (read-only, last 24h).")
     parser.add_argument("--server", action="store_true", help="Start the web digest server.")
     parser.add_argument("--port", type=int, default=5000, help="Web server port.")
@@ -811,52 +751,20 @@ def main():
         logger.error(f"Failed to POST /ingest: {e}")
         sys.exit(1)
 
-    # 5. Format Push Notification & Digest Preview
-    base_url = os.environ.get("APP_BASE_URL", "http://localhost:5000")
-    token = get_digest_token()
-    digest_url = f"{base_url.rstrip('/')}/digest?token={token}"
-    topic = os.environ.get("NTFY_TOPIC", "")
-
-    push_title, push_body, push_headers = format_push_notification(classified_items, digest_url, base_url)
-
-    # Mask tokens for printing and preview
-    push_headers_masked = push_headers.copy()
-    if "Click" in push_headers_masked:
-        push_headers_masked["Click"] = push_headers_masked["Click"].replace(token, "***")
-    if "Actions" in push_headers_masked:
-        push_headers_masked["Actions"] = push_headers_masked["Actions"].replace(token, "***")
-        
-    # Write digest_preview.md
-    preview_md = generate_digest_preview_md(classified_items, push_title, push_body, push_headers_masked, rules, topic)
+    # 5. Digest Preview & Summary Counts
+    preview_md = generate_digest_preview_md(classified_items, rules)
     with open(DIGEST_PREVIEW_FILE, "w", encoding="utf-8") as f:
         f.write(preview_md)
     logger.info(f"Saved digest preview to {DIGEST_PREVIEW_FILE}.")
 
-    # Output Push Notification details
-    print("\n=======================================================")
-    print("NTFY PUSH NOTIFICATION DETAILS:")
-    print("=======================================================")
-    print(f"Topic: https://ntfy.sh/{topic if topic else '[NTFY_TOPIC is not set]'}")
-    print(f"Title: {push_title}")
-    print(f"Priority: {push_headers_masked.get('Priority')}")
-    print(f"Click: {push_headers_masked.get('Click')}")
-    print(f"Actions: {push_headers_masked.get('Actions')}")
-    print("Push Body:")
-    print("-------------------------------------------------------")
-    print(push_body)
-    print("-------------------------------------------------------")
-
     if args.dry_run:
-        print("\n[DRY RUN] Push notification was NOT sent. Digest preview written to digest_preview.md.")
-    else:
-        if not topic:
-            print("\n[NOTE] NTFY_TOPIC is empty; skipping real push notification.")
-        else:
-            success = send_ntfy_push(topic, push_title, push_body, push_headers)
-            if success:
-                print(f"\nSuccessfully published push notification to https://ntfy.sh/{topic}!")
-            else:
-                print(f"\nFailed to publish push notification to https://ntfy.sh/{topic}.")
+        must_act = [x for x in classified_items if x["label"] == "must_act"]
+        pinned = [x for x in classified_items if x["label"] == "pinned"]
+        worth_a_look = [x for x in classified_items if x["label"] == "worth_a_look"]
+        fyi = [x for x in classified_items if x["label"] == "fyi"]
+        noise = [x for x in classified_items if x["label"] == "noise"]
+        ignored = [x for x in classified_items if x["label"] == "ignored"]
+        print(f"OneInbox: {len(must_act)} need action | {len(pinned)} pinned | {len(worth_a_look)} worth a look | {len(fyi)} FYI | {len(noise)} noise | {len(ignored)} ignored")
 
 if __name__ == "__main__":
     main()

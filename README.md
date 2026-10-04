@@ -22,11 +22,7 @@ It categorizes incoming emails into four actionable tiers:
 4. **Preference Rules via Backboard Memory**:
    - User preferences (`RULE: always_show sender=...` and `RULE: ignore sender=...`) are retrieved directly from Backboard memories.
    - Rules are parsed and applied deterministically in code—never relying on probabilistic semantic search for classification decisions.
-5. **Short Push Notifications via ntfy**:
-   - Compact push notifications sent to your private topic on `ntfy.sh`.
-   - Contains a title (`OneInbox: N need action`), up to 5 must-act one-liners (`sender - subject - deadline`), and category counts.
-   - Contains **no email bodies or summaries** in the push payload. Tapping the push notification or clicking action buttons opens the full mobile digest page.
-6. **Mobile Digest Web Service & HMAC Feedback**:
+5. **Mobile Digest Web Service & HMAC Feedback**:
    - A lightweight Flask service serving `/digest?token=...` protected by `DIGEST_TOKEN`.
    - Each item includes one-click feedback buttons (`Always Show Sender`, `Ignore Sender`, `Accurate ✓`, `Wrong ✗`).
    - Links are signed with an HMAC-SHA256 signature using `FEEDBACK_SECRET`. When tapped, the web service verifies the signature, appends the preference rule to Backboard memory, and confirms the update. The next digest automatically honors the updated rule.
@@ -42,7 +38,6 @@ Configure these in `.env` (or in the Render dashboard for cloud deployment):
 | `TINKER_API_KEY` | API key for Tinker training and inference. |
 | `BACKBOARD_API_KEY` | API key for Backboard assistant memory storage. |
 | `BACKBOARD_ASSISTANT_ID` | Assistant ID for OneInbox on Backboard. |
-| `NTFY_TOPIC` | Secret topic string for push notifications (e.g. `oneinbox_alerts_abc123`). |
 | `DIGEST_TOKEN` | Secret URL token required to access `/digest?token=...`. |
 | `FEEDBACK_SECRET` | HMAC secret key used to sign and verify feedback links. |
 | `APP_BASE_URL` | Base URL of the web service (e.g. `http://localhost:5000` or `https://oneinbox.onrender.com`). |
@@ -67,7 +62,7 @@ pip install -r requirements.txt
 
 ### 2. Run Daily Digest in Demo Mode
 ```bash
-# Preview digest and push notification without publishing
+# Preview digest summary counts
 python app.py --dry-run
 ```
 
@@ -99,6 +94,7 @@ python app.py --imap --dry-run
 
 ## Privacy Notes
 
+- **No Third-Party Notification Service**: No third-party notification service is used. The digest is read exclusively on a token-protected page (`/digest?token=...`). A push notification could be added later.
 - **Never Logged**: Raw email bodies, full headers, and API keys are never printed to stdout/stderr or written to version control.
 - **Strict Read-Only IMAP**: IMAP connections use `mail.select("INBOX", readonly=True)`, preventing any modification, flagging, or deletion of user emails.
 - **Pre-Model Redaction**: PII (phone numbers, OTP codes, card/account numbers, and external URLs) is stripped before prompt assembly.
