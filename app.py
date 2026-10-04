@@ -301,188 +301,225 @@ def create_app():
     assistant_id = os.environ.get("BACKBOARD_ASSISTANT_ID", "")
 
     HTML_TEMPLATE = """<!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneInbox Digest</title>
+    <title>OneInbox | Intelligence Digest</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        :root {
-            --bg: #f8fafc;
-            --card-bg: #ffffff;
-            --text: #0f172a;
-            --muted: #64748b;
-            --border: #e2e8f0;
-            --must-act: #ef4444;
-            --worth: #6366f1;
-            --fyi: #0ea5e9;
-            --noise: #94a3b8;
-        }
-        @media (prefers-color-scheme: dark) {
-            :root {
-                --bg: #090d16;
-                --card-bg: #131b2e;
-                --text: #f1f5f9;
-                --muted: #94a3b8;
-                --border: #1e293b;
-            }
-        }
         body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 16px;
-            display: flex;
-            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            background-color: #030305;
+            color: #fff;
+            overflow-x: hidden;
         }
-        .container {
-            width: 100%;
-            max-width: 680px;
+
+        /* Ambient Glowing Background */
+        .ambient-bg {
+            position: fixed;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle at 50% 0%, rgba(59, 130, 246, 0.15) 0%, rgba(0, 0, 0, 0) 50%),
+                        radial-gradient(circle at 80% 80%, rgba(239, 68, 68, 0.1) 0%, rgba(0, 0, 0, 0) 40%);
+            z-index: -1;
+            pointer-events: none;
         }
-        header {
-            margin-bottom: 24px;
-            padding-bottom: 16px;
-            border-bottom: 1px solid var(--border);
+
+        /* Glassmorphism Cards */
+        .glass-card {
+            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+            transition: transform 0.2s ease, border-color 0.2s ease;
         }
-        h1 { margin: 0 0 6px 0; font-size: 1.5rem; }
-        .meta { color: var(--muted); font-size: 0.85rem; }
-        .counts { display: flex; gap: 8px; margin-top: 12px; flex-wrap: wrap; }
-        .badge {
-            font-size: 0.75rem;
-            font-weight: 600;
-            padding: 3px 8px;
-            border-radius: 9999px;
-            display: inline-block;
+
+        .glass-card:hover {
+            transform: translateY(-2px);
+            border-color: rgba(255, 255, 255, 0.15);
         }
-        .badge-must-act { background: rgba(239, 68, 68, 0.15); color: #ef4444; border: 1px solid rgba(239, 68, 68, 0.3); }
-        .badge-worth { background: rgba(99, 102, 241, 0.15); color: #6366f1; border: 1px solid rgba(99, 102, 241, 0.3); }
-        .badge-fyi { background: rgba(14, 165, 233, 0.15); color: #0ea5e9; border: 1px solid rgba(14, 165, 233, 0.3); }
-        .badge-noise { background: rgba(148, 163, 184, 0.15); color: #94a3b8; border: 1px solid rgba(148, 163, 184, 0.3); }
-        .card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 14px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.04);
+
+        .glass-nav {
+            background: rgba(10, 10, 15, 0.6);
+            backdrop-filter: blur(24px);
+            -webkit-backdrop-filter: blur(24px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .card.must-act-card { border-left: 4px solid var(--must-act); }
-        .card.worth-card { border-left: 4px solid var(--worth); }
-        .card.fyi-card { border-left: 4px solid var(--fyi); }
-        .sender { font-weight: 600; font-size: 0.95rem; margin-bottom: 2px; }
-        .subject { font-size: 1.05rem; font-weight: 700; margin-bottom: 6px; }
-        .summary { font-size: 0.9rem; line-height: 1.4; margin-bottom: 8px; }
-        .why { font-size: 0.8rem; color: var(--muted); margin-bottom: 10px; font-style: italic; }
-        .deadline { color: #ef4444; font-weight: 600; font-size: 0.82rem; margin-bottom: 8px; }
-        .actions {
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-            padding-top: 10px;
-            border-top: 1px solid var(--border);
+
+        .text-gradient {
+            background: linear-gradient(to right, #fff, #9ca3af);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
-        .btn {
-            font-size: 0.75rem;
-            text-decoration: none;
-            padding: 4px 10px;
-            border-radius: 6px;
-            border: 1px solid var(--border);
-            color: var(--text);
-            background: var(--bg);
-            transition: all 0.15s;
-        }
-        .btn:hover { opacity: 0.8; }
-        .btn-rule { border-color: rgba(99, 102, 241, 0.4); color: var(--worth); }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #000; }
+        ::-webkit-scrollbar-thumb { background: #333; border-radius: 4px; }
+        ::-webkit-scrollbar-thumb:hover { background: #555; }
     </style>
 </head>
-<body>
-<div class="container">
-    <header>
-        <h1>Inbox Intelligence Digest</h1>
-        {% if digest.mode == 'Demo (Sample Emails)' %}
-        <div style="background: #fef3c7; color: #92400e; padding: 8px; border-radius: 6px; font-weight: 600; margin-bottom: 12px; font-size: 0.9rem;">
-            Demo: archived sample emails dated Sept 2026
+<body class="antialiased selection:bg-blue-500/30 pb-20">
+
+    <div class="ambient-bg"></div>
+
+    <!-- Sticky Glass Header -->
+    <nav class="fixed top-0 w-full z-50 glass-nav">
+        <div class="max-w-3xl mx-auto px-6 py-4">
+            <div class="flex justify-between items-center mb-4">
+                <div class="text-xl font-semibold tracking-tight text-gradient">OneInbox<span class="text-blue-500">.</span></div>
+                <div class="text-xs text-gray-500 font-medium bg-white/5 px-3 py-1 rounded-full border border-white/5">
+                    {{ digest.generated_at }}
+                </div>
+            </div>
+            
+            {% if digest.mode == 'Demo (Sample Emails)' %}
+            <div class="w-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-xs font-semibold px-4 py-2 rounded-lg mb-4 flex items-center justify-center">
+                Demo Mode: Displaying 25 archived sample emails
+            </div>
+            {% endif %}
+
+            <!-- Stats Row -->
+            <div class="flex flex-wrap gap-2 text-xs font-medium">
+                <div class="px-3 py-1.5 rounded-full bg-red-500/10 border border-red-500/20 text-red-400 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                    {{ digest.must_act|length }} Action Required
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-blue-500/10 border border-blue-500/20 text-blue-400 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                    {{ digest.worth_a_look|length }} Worth a Look
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.8)]"></span>
+                    {{ digest.fyi|length }} FYI
+                </div>
+                <div class="px-3 py-1.5 rounded-full bg-gray-500/10 border border-gray-500/20 text-gray-400">
+                    {{ digest.noise_count }} Noise
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-3xl mx-auto px-6 pt-48 md:pt-40">
+        
+        {% if digest.pinned %}
+        <div class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-emerald-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"></path></svg>
+                Pinned Rules
+            </h2>
+            <div class="space-y-4">
+                {% for item in digest.pinned %}
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-emerald-500">
+                    <div class="text-emerald-400 text-xs font-semibold uppercase tracking-wider mb-2">{{ item.from }}</div>
+                    <div class="text-lg font-semibold text-white mb-2">{{ item.subject }}</div>
+                    <div class="text-gray-400 text-sm leading-relaxed">{{ item.summary }}</div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
         {% endif %}
-        <div class="meta">Generated: {{ digest.generated_at }} | {{ digest.total_count }} emails analyzed</div>
-        <div class="counts">
-            <span class="badge badge-must-act">{{ digest.must_act|length }} Action Required</span>
-            <span class="badge badge-worth">{{ digest.worth_a_look|length }} Worth a Look</span>
-            <span class="badge badge-fyi">{{ digest.fyi|length }} FYI</span>
-            <span class="badge badge-noise">{{ digest.noise_count }} Filtered Noise</span>
-            {% if digest.pinned %}<span class="badge badge-fyi">{{ digest.pinned|length }} Pinned</span>{% endif %}
-            {% if digest.ignored_count %}<span class="badge badge-noise">{{ digest.ignored_count }} Ignored</span>{% endif %}
+
+        {% if digest.must_act %}
+        <div class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-red-400">
+                <span class="w-2 h-2 rounded-full bg-red-500 shadow-[0_0_8px_rgba(239,68,68,0.8)]"></span>
+                Action Required
+            </h2>
+            <div class="space-y-4">
+                {% for item in digest.must_act %}
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-red-500 relative overflow-hidden">
+                    <div class="absolute top-0 right-0 w-32 h-32 bg-red-500/5 blur-3xl -z-10 rounded-full"></div>
+                    <div class="text-gray-400 text-xs font-medium mb-1">{{ item.from }}</div>
+                    <div class="text-xl font-semibold text-white mb-3">{{ item.subject }}</div>
+                    
+                    {% if item.deadline %}
+                    <div class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded bg-red-500/20 text-red-400 text-xs font-bold mb-4">
+                        <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                        Deadline: {{ item.deadline }}
+                    </div>
+                    {% endif %}
+                    
+                    <div class="text-gray-300 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
+                    <div class="text-gray-500 text-xs italic mb-6">AI Reason: {{ item.why }}</div>
+                    
+                    <!-- Feedback Actions -->
+                    <div class="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+                        <a href="{{ item.ignore_link }}" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white hover:bg-white/10 transition-colors">Ignore Sender</a>
+                        <div class="flex-grow"></div>
+                        <a href="{{ item.good_link }}" class="px-4 py-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-xs font-medium text-emerald-400 hover:bg-emerald-500/20 transition-colors">Accurate ✓</a>
+                        <a href="{{ item.wrong_link }}" class="px-4 py-2 rounded-lg bg-red-500/10 border border-red-500/20 text-xs font-medium text-red-400 hover:bg-red-500/20 transition-colors">Wrong ✕</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </header>
+        {% endif %}
 
-    {% if digest.pinned %}
-    <h2>📌 Pinned</h2>
-    {% for item in digest.pinned %}
-    <div class="card fyi-card">
-        <div class="sender">{{ item.from }}</div>
-        <div class="subject">{{ item.subject }}</div>
-        <div class="summary">{{ item.summary }}</div>
-    </div>
-    {% endfor %}
-    {% endif %}
-
-    {% if digest.must_act %}
-    <h2>🚨 Action Required</h2>
-    {% for item in digest.must_act %}
-    <div class="card must-act-card">
-        <div class="sender">{{ item.from }}</div>
-        <div class="subject">{{ item.subject }}</div>
-        {% if item.deadline %}<div class="deadline">⏰ Deadline: {{ item.deadline }}</div>{% endif %}
-        <div class="summary">{{ item.summary }}</div>
-        <div class="why">{{ item.why }}</div>
-        <div class="actions">
-            <a class="btn btn-rule" href="{{ item.ignore_link }}">Ignore Sender</a>
-            <a class="btn" href="{{ item.good_link }}">Accurate ✓</a>
-            <a class="btn" href="{{ item.wrong_link }}">Wrong ✗</a>
+        {% if digest.worth_a_look %}
+        <div class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-blue-400">
+                <span class="w-2 h-2 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.8)]"></span>
+                Worth a Look
+            </h2>
+            <div class="space-y-4">
+                {% for item in digest.worth_a_look %}
+                <div class="glass-card rounded-2xl p-6 border-l-4 border-l-blue-500">
+                    <div class="text-gray-400 text-xs font-medium mb-1">{{ item.from }}</div>
+                    <div class="text-lg font-semibold text-white mb-3">{{ item.subject }}</div>
+                    <div class="text-gray-300 text-sm leading-relaxed mb-3">{{ item.summary }}</div>
+                    <div class="text-gray-500 text-xs italic mb-6">AI Reason: {{ item.why }}</div>
+                    
+                    <!-- Feedback Actions -->
+                    <div class="flex flex-wrap gap-3 pt-4 border-t border-white/5">
+                        <a href="{{ item.always_link }}" class="px-4 py-2 rounded-lg bg-blue-500/10 border border-blue-500/30 text-xs font-medium text-blue-400 hover:bg-blue-500/20 transition-colors">Always Show</a>
+                        <a href="{{ item.ignore_link }}" class="px-4 py-2 rounded-lg bg-white/5 border border-white/10 text-xs font-medium text-white hover:bg-white/10 transition-colors">Ignore</a>
+                        <div class="flex-grow"></div>
+                        <a href="{{ item.good_link }}" class="px-3 py-2 rounded-lg bg-white/5 text-xs font-medium text-gray-300 hover:text-emerald-400 transition-colors">✓</a>
+                        <a href="{{ item.wrong_link }}" class="px-3 py-2 rounded-lg bg-white/5 text-xs font-medium text-gray-300 hover:text-red-400 transition-colors">✕</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    {% endfor %}
-    {% endif %}
+        {% endif %}
 
-    {% if digest.worth_a_look %}
-    <h2>💡 Worth a Look</h2>
-    {% for item in digest.worth_a_look %}
-    <div class="card worth-card">
-        <div class="sender">{{ item.from }}</div>
-        <div class="subject">{{ item.subject }}</div>
-        <div class="summary">{{ item.summary }}</div>
-        <div class="why">{{ item.why }}</div>
-        <div class="actions">
-            <a class="btn btn-rule" href="{{ item.always_link }}">Always Show</a>
-            <a class="btn btn-rule" href="{{ item.ignore_link }}">Ignore</a>
-            <a class="btn" href="{{ item.good_link }}">Accurate ✓</a>
-            <a class="btn" href="{{ item.wrong_link }}">Wrong ✗</a>
+        {% if digest.fyi %}
+        <div class="mb-12">
+            <h2 class="text-xl font-semibold mb-6 flex items-center gap-2 text-gray-400">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                For Your Information
+            </h2>
+            <div class="grid md:grid-cols-2 gap-4">
+                {% for item in digest.fyi %}
+                <div class="glass-card rounded-xl p-5 border-l-2 border-l-gray-600">
+                    <div class="text-gray-500 text-xs font-medium mb-1 truncate">{{ item.from }}</div>
+                    <div class="text-base font-semibold text-gray-200 mb-2 truncate">{{ item.subject }}</div>
+                    <div class="text-gray-400 text-xs leading-relaxed mb-4 line-clamp-2">{{ item.summary }}</div>
+                    
+                    <div class="flex flex-wrap gap-2 pt-3 border-t border-white/5">
+                        <a href="{{ item.always_link }}" class="text-[10px] uppercase font-bold text-blue-400 hover:text-blue-300">Always Show</a>
+                        <a href="{{ item.ignore_link }}" class="text-[10px] uppercase font-bold text-gray-500 hover:text-gray-300">Ignore</a>
+                        <div class="flex-grow"></div>
+                        <a href="{{ item.good_link }}" class="text-[10px] uppercase font-bold text-gray-500 hover:text-emerald-400">Accurate</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
-    </div>
-    {% endfor %}
-    {% endif %}
+        {% endif %}
 
-    {% if digest.fyi %}
-    <h2>ℹ️ For Your Information</h2>
-    {% for item in digest.fyi %}
-    <div class="card fyi-card">
-        <div class="sender">{{ item.from }}</div>
-        <div class="subject">{{ item.subject }}</div>
-        <div class="summary">{{ item.summary }}</div>
-        <div class="actions">
-            <a class="btn btn-rule" href="{{ item.always_link }}">Always Show</a>
-            <a class="btn btn-rule" href="{{ item.ignore_link }}">Ignore</a>
-            <a class="btn" href="{{ item.good_link }}">Accurate ✓</a>
+        <div class="text-center mt-16 pt-8 border-t border-white/5 text-xs text-gray-600">
+            OneInbox • End-to-End AI Sorting • Secured by HMAC Feedback • Backboard Memory Active
         </div>
-    </div>
-    {% endfor %}
-    {% endif %}
+    </main>
 
-    <div style="margin-top: 30px; text-align: center; color: var(--muted); font-size: 0.8rem;">
-        OneInbox • Protected with HMAC tokens • Backboard Memory Enabled
-    </div>
-</div>
 </body>
 </html>"""
 
