@@ -685,6 +685,35 @@ def create_app():
 
     return app
 
+def post_digest_to_ingest(digest_data: dict, base_url: str, ingest_token: str, max_retries: int = None) -> bool:
+    if max_retries is None:
+        max_retries = int(os.environ.get("INGEST_RETRIES", "5"))
+    ingest_url = f"{base_url.rstrip('/')}/ingest"
+
+    for attempt in range(1, max_retries + 1):
+        try:
+            logger.info(f"Posting digest to {ingest_url} (attempt {attempt}/{max_retries})...")
+            resp = requests.post(
+                ingest_url,
+                json=digest_data,
+                headers={"Authorization": f"Bearer {ingest_token}"},
+                timeout=60
+            )
+            if resp.status_code == 200:
+                logger.info("Successfully posted digest to /ingest.")
+                return True
+            else:
+                logger.error(f"POST /ingest attempt {attempt} returned status {resp.status_code}: {resp.text}")
+        except Exception as e:
+            logger.error(f"POST /ingest attempt {attempt} failed: {e}")
+
+        if attempt < max_retries:
+            logger.info("Waiting 20 seconds before retry...")
+            time.sleep(20)
+
+    logger.error(f"All {max_retries} attempts to POST /ingest failed.")
+    return False
+
 # ── Main Entrypoint ────────────────────────────────────────────────────────────
 
 def main():
@@ -745,15 +774,7 @@ def main():
     if not args.dry_run:
         base_url = os.environ.get("APP_BASE_URL", "http://localhost:5000")
         ingest_token = os.environ.get("INGEST_TOKEN", "")
-        ingest_url = f"{base_url.rstrip('/')}/ingest"
-        
-        try:
-            resp = requests.post(ingest_url, json=digest_data, headers={"Authorization": f"Bearer {ingest_token}"}, timeout=10)
-            if resp.status_code != 200:
-                logger.error(f"Failed to POST /ingest. Status: {resp.status_code}. Response: {resp.text}")
-                sys.exit(1)
-        except Exception as e:
-            logger.error(f"Failed to POST /ingest: {e}")
+        if not post_digest_to_ingest(digest_data, base_url, ingest_token):
             sys.exit(1)
 
     # 5. Digest Preview & Summary Counts
@@ -762,14 +783,13 @@ def main():
         f.write(preview_md)
     logger.info(f"Saved digest preview to {DIGEST_PREVIEW_FILE}.")
 
-    if args.dry_run:
-        must_act = [x for x in classified_items if x["label"] == "must_act"]
-        pinned = [x for x in classified_items if x["label"] == "pinned"]
-        worth_a_look = [x for x in classified_items if x["label"] == "worth_a_look"]
-        fyi = [x for x in classified_items if x["label"] == "fyi"]
-        noise = [x for x in classified_items if x["label"] == "noise"]
-        ignored = [x for x in classified_items if x["label"] == "ignored"]
-        print(f"OneInbox: {len(must_act)} need action | {len(pinned)} pinned | {len(worth_a_look)} worth a look | {len(fyi)} FYI | {len(noise)} noise | {len(ignored)} ignored")
+    must_act = [x for x in classified_items if x["label"] == "must_act"]
+    pinned = [x for x in classified_items if x["label"] == "pinned"]
+    worth_a_look = [x for x in classified_items if x["label"] == "worth_a_look"]
+    fyi = [x for x in classified_items if x["label"] == "fyi"]
+    noise = [x for x in classified_items if x["label"] == "noise"]
+    ignored = [x for x in classified_items if x["label"] == "ignored"]
+    print(f"OneInbox: {len(must_act)} need action | {len(pinned)} pinned | {len(worth_a_look)} worth a look | {len(fyi)} FYI | {len(noise)} noise | {len(ignored)} ignored")
 
 if __name__ == "__main__":
     main()
