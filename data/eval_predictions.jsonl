@@ -1,0 +1,240 @@
+{"id": 0, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 1, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-20", "predicted_deadline": "2026-09-20"}
+{"id": 2, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 3, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 4, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 5, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-15", "predicted_deadline": "2026-09-15"}
+{"id": 6, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 7, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-10-01"}
+{"id": 8, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 9, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": null, "predicted_deadline": null}
+{"id": 10, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-21", "predicted_deadline": "2026-09-21"}
+{"id": 11, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 12, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 13, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-08", "predicted_deadline": "2026-10-08"}
+{"id": 14, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 15, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-19", "predicted_deadline": "2026-09-19"}
+{"id": 16, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-30", "predicted_deadline": "2026-10-05"}
+{"id": 17, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-06-10"}
+{"id": 18, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 19, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 20, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-27", "predicted_deadline": "2026-09-27"}
+{"id": 21, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 22, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 23, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-09-21"}
+{"id": 24, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 25, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-23", "predicted_deadline": "2026-09-23"}
+{"id": 26, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 27, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-25", "predicted_deadline": "2026-09-25"}
+{"id": 28, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 29, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 30, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": null}
+{"id": 31, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 32, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-25"}
+{"id": 33, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": "2026-09-28"}
+{"id": 34, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-17", "predicted_deadline": "2026-09-17"}
+{"id": 35, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 36, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-24", "predicted_deadline": "2026-09-24"}
+{"id": 37, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 38, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 39, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 40, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-07", "predicted_deadline": "2026-07-10"}
+{"id": 41, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 42, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-01", "predicted_deadline": "2026-10-01"}
+{"id": 43, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-09-12"}
+{"id": 44, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 45, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 46, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 47, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 48, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-12", "predicted_deadline": "2026-09-12"}
+{"id": 49, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 50, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 51, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 52, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "worth_a_look", "gold_deadline": null, "predicted_deadline": null}
+{"id": 53, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 54, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 55, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 56, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 57, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 58, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-12", "predicted_deadline": "2026-12-10"}
+{"id": 59, "variant": "Base Qwen3.5-4B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-16", "predicted_deadline": "2026-09-16"}
+{"id": 0, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 1, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-20", "predicted_deadline": "2026-09-20"}
+{"id": 2, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 3, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 4, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 5, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-15", "predicted_deadline": "2026-09-15"}
+{"id": 6, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 7, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 8, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 9, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": null, "predicted_deadline": null}
+{"id": 10, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-21", "predicted_deadline": "2026-09-21"}
+{"id": 11, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 12, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 13, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-08", "predicted_deadline": "2026-10-08"}
+{"id": 14, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 15, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-19", "predicted_deadline": "2026-09-19"}
+{"id": 16, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-30", "predicted_deadline": "2026-10-01"}
+{"id": 17, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 18, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 19, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 20, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-27", "predicted_deadline": "2026-09-27"}
+{"id": 21, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 22, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 23, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 24, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 25, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-23", "predicted_deadline": "2026-09-23"}
+{"id": 26, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 27, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-25", "predicted_deadline": "2026-09-25"}
+{"id": 28, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 29, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 30, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 31, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 32, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-23"}
+{"id": 33, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": "2026-10-01"}
+{"id": 34, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-17", "predicted_deadline": "2026-09-17"}
+{"id": 35, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 36, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-24", "predicted_deadline": "2026-09-24"}
+{"id": 37, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 38, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 39, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 40, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-07", "predicted_deadline": "2026-10-07"}
+{"id": 41, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 42, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-01", "predicted_deadline": "2026-10-01"}
+{"id": 43, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-09-12"}
+{"id": 44, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 45, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 46, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 47, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 48, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-12", "predicted_deadline": "2026-09-12"}
+{"id": 49, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 50, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 51, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 52, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 53, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 54, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 55, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 56, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 57, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 58, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-12", "predicted_deadline": "2026-12-10"}
+{"id": 59, "variant": "Base Qwen3.5-4B (3-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-16", "predicted_deadline": "2026-09-16"}
+{"id": 0, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 1, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-20", "predicted_deadline": "2026-09-20"}
+{"id": 2, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 3, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 4, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 5, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-15", "predicted_deadline": "2026-09-15"}
+{"id": 6, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 7, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 8, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 9, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": null, "predicted_deadline": null}
+{"id": 10, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-21", "predicted_deadline": "2026-09-21"}
+{"id": 11, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 12, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-02", "predicted_deadline": null}
+{"id": 13, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-08", "predicted_deadline": "2026-10-08"}
+{"id": 14, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 15, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-19", "predicted_deadline": "2026-09-19"}
+{"id": 16, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-30", "predicted_deadline": "2026-10-01"}
+{"id": 17, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 18, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 19, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 20, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-27", "predicted_deadline": "2026-09-27"}
+{"id": 21, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 22, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 23, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 24, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 25, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-23", "predicted_deadline": "2026-09-23"}
+{"id": 26, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 27, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-25", "predicted_deadline": "2026-09-25"}
+{"id": 28, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 29, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 30, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 31, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 32, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 33, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 34, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-17", "predicted_deadline": "2026-09-17"}
+{"id": 35, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 36, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-24", "predicted_deadline": null}
+{"id": 37, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 38, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 39, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 40, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-07", "predicted_deadline": "2026-10-07"}
+{"id": 41, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 42, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-01", "predicted_deadline": "2026-10-01"}
+{"id": 43, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 44, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 45, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 46, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 47, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 48, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-12", "predicted_deadline": "2026-09-12"}
+{"id": 49, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 50, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 51, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 52, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 53, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 54, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 55, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 56, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "fyi", "predicted_label": "worth_a_look", "gold_deadline": null, "predicted_deadline": null}
+{"id": 57, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 58, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-12", "predicted_deadline": "2026-10-12"}
+{"id": 59, "variant": "Fine-tuned Qwen3.5-4B", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-16", "predicted_deadline": "2026-09-16"}
+{"id": 0, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 1, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-20", "predicted_deadline": "2026-09-20"}
+{"id": 2, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 3, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 4, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 5, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-15", "predicted_deadline": "2026-09-15"}
+{"id": 6, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 7, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 8, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 9, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 10, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-21", "predicted_deadline": "2026-09-21"}
+{"id": 11, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 12, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 13, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-08", "predicted_deadline": "2026-10-08"}
+{"id": 14, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 15, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-19", "predicted_deadline": "2026-09-19"}
+{"id": 16, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-30", "predicted_deadline": "2026-09-30"}
+{"id": 17, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": "2026-10-06", "predicted_deadline": null}
+{"id": 18, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 19, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 20, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-27", "predicted_deadline": "2026-09-27"}
+{"id": 21, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 22, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 23, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 24, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 25, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-23", "predicted_deadline": "2026-09-23"}
+{"id": 26, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": "2026-09-14", "predicted_deadline": null}
+{"id": 27, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-25", "predicted_deadline": "2026-09-25"}
+{"id": 28, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-14", "predicted_deadline": "2026-09-14"}
+{"id": 29, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 30, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 31, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 32, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 33, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-09-28"}
+{"id": 34, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-17", "predicted_deadline": "2026-09-17"}
+{"id": 35, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 36, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-24", "predicted_deadline": "2026-09-24"}
+{"id": 37, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-02", "predicted_deadline": "2026-10-02"}
+{"id": 38, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "must_act", "gold_deadline": null, "predicted_deadline": "2026-09-04"}
+{"id": 39, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 40, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-07", "predicted_deadline": "2026-07-10"}
+{"id": 41, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-07", "predicted_deadline": "2026-09-07"}
+{"id": 42, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-01", "predicted_deadline": "2026-10-01"}
+{"id": 43, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 44, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 45, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-10-06", "predicted_deadline": "2026-10-06"}
+{"id": 46, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 47, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 48, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-12", "predicted_deadline": "2026-09-12"}
+{"id": 49, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 50, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 51, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "fyi", "gold_deadline": null, "predicted_deadline": null}
+{"id": 52, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 53, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-09-22", "predicted_deadline": "2026-09-22"}
+{"id": 54, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 55, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 56, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "fyi", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 57, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "noise", "predicted_label": "noise", "gold_deadline": null, "predicted_deadline": null}
+{"id": 58, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "worth_a_look", "predicted_label": "worth_a_look", "gold_deadline": "2026-10-12", "predicted_deadline": "2026-10-12"}
+{"id": 59, "variant": "Base Qwen3.6-35B-A3B (0-shot)", "gold_label": "must_act", "predicted_label": "must_act", "gold_deadline": "2026-09-16", "predicted_deadline": "2026-09-16"}

@@ -1,0 +1,15 @@
+scratch/
+parsed.txt
+backboard_docs.html
+tinker_cookbook_supervised.txt
+data/real_*
+.env
+*.log
+logs/
+__pycache__/
+patch*.py
+diagnose.py
+data/dummy_real*
+data/old_dummy_test.jsonl
+data/train_conversations.jsonl
+weights/

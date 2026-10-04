@@ -1,0 +1,4 @@
+tinker
+python-dotenv
+requests
+numpy

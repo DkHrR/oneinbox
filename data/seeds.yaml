@@ -1,0 +1,719 @@
+must_act:
+  - scenario: "Hackathon submission deadline is tomorrow"
+    senders:
+      - name: "Devfolio"
+        domain: "devfolio.co"
+      - name: "Unstop"
+        domain: "unstop.com"
+      - name: "Major League Hacking"
+        domain: "mlh.io"
+      - name: "IIT Bombay Coding Club"
+        domain: "iitb.ac.in"
+      - name: "HackerEarth"
+        domain: "hackerearth.com"
+    has_amount: false
+
+  - scenario: "Final reminder to pay university tuition fee"
+    senders:
+      - name: "IIT Delhi Finance Office"
+        domain: "iitd.ac.in"
+      - name: "BITS Pilani Student Accounts"
+        domain: "pilani.bits-pilani.ac.in"
+      - name: "VIT Vellore Accounts Branch"
+        domain: "vit.ac.in"
+      - name: "Delhi University Finance Division"
+        domain: "du.ac.in"
+      - name: "SRM University Bursar"
+        domain: "srmist.edu.in"
+    has_amount: true
+
+  - scenario: "Recruiter requesting availability for a technical interview"
+    senders:
+      - name: "TCS Early Careers"
+        domain: "tcs.com"
+      - name: "Infosys Campus Recruitment"
+        domain: "infosys.com"
+      - name: "Swiggy Talent Acquisition"
+        domain: "swiggy.in"
+      - name: "Zepto Engineering Hiring"
+        domain: "zeptonow.com"
+      - name: "CRED People Team"
+        domain: "cred.club"
+    has_amount: false
+
+  - scenario: "Action required: Verify your email address for GitHub"
+    senders:
+      - name: "GitHub Security"
+        domain: "github.com"
+      - name: "GitHub Accounts"
+        domain: "github.com"
+      - name: "GitHub Developer Support"
+        domain: "github.com"
+      - name: "GitHub Identity"
+        domain: "github.com"
+    has_amount: false
+
+  - scenario: "URGENT: Server downtime scheduled, update required"
+    senders:
+      - name: "AWS Cloud Operations"
+        domain: "aws.amazon.com"
+      - name: "Google Cloud Support"
+        domain: "cloud.google.com"
+      - name: "DigitalOcean Alerts"
+        domain: "digitalocean.com"
+      - name: "Cloudflare Operations"
+        domain: "cloudflare.com"
+      - name: "Vercel Platform Desk"
+        domain: "vercel.com"
+    has_amount: false
+
+  - scenario: "Action needed: Your credit card is expiring soon"
+    senders:
+      - name: "HDFC Bank Card Operations"
+        domain: "hdfcbank.net"
+      - name: "SBI Card Support"
+        domain: "sbicard.com"
+      - name: "ICICI Bank Cards"
+        domain: "icicibank.com"
+      - name: "Axis Bank Card Services"
+        domain: "axisbank.com"
+      - name: "Kotak Mahindra Card Cell"
+        domain: "kotak.com"
+    has_amount: false
+
+  - scenario: "Overdue library book return notice"
+    senders:
+      - name: "IIT Bombay Central Library"
+        domain: "iitb.ac.in"
+      - name: "BITS Pilani Library"
+        domain: "pilani.bits-pilani.ac.in"
+      - name: "Delhi University Central Library"
+        domain: "du.ac.in"
+      - name: "British Council Library India"
+        domain: "britishcouncil.in"
+    has_amount: true
+
+  - scenario: "Invitation to mandatory compliance training"
+    senders:
+      - name: "Infosys Compliance Cell"
+        domain: "infosys.com"
+      - name: "TCS Ethics and Compliance"
+        domain: "tcs.com"
+      - name: "Wipro Learning Portal"
+        domain: "wipro.com"
+      - name: "Deloitte India HR"
+        domain: "deloitte.com"
+    has_amount: false
+
+  - scenario: "Final warning: Account suspension pending"
+    senders:
+      - name: "Supabase Platform Security"
+        domain: "supabase.com"
+      - name: "Render Cloud Hosting"
+        domain: "render.com"
+      - name: "Netlify Account Security"
+        domain: "netlify.com"
+      - name: "Hostinger India Operations"
+        domain: "hostinger.in"
+    has_amount: false
+
+  - scenario: "Request for feedback on recent pull request"
+    senders:
+      - name: "GitHub Notifications"
+        domain: "github.com"
+      - name: "GitLab Code Review"
+        domain: "gitlab.com"
+      - name: "Bitbucket Cloud"
+        domain: "bitbucket.org"
+      - name: "Linear Dev Team"
+        domain: "linear.app"
+    has_amount: false
+
+  - scenario: "Urgent: Fix failing CI/CD pipeline"
+    senders:
+      - name: "GitHub Actions CI"
+        domain: "github.com"
+      - name: "GitLab CI Runner"
+        domain: "gitlab.com"
+      - name: "CircleCI Build Service"
+        domain: "circleci.com"
+      - name: "Jenkins Automated Build"
+        domain: "jenkins.io"
+    has_amount: false
+
+  - scenario: "Flight check-in opens in 24 hours"
+    senders:
+      - name: "IndiGo Airlines"
+        domain: "goindigo.in"
+      - name: "Air India Passenger Services"
+        domain: "airindia.com"
+      - name: "Akasa Air Flights"
+        domain: "akasaair.com"
+      - name: "SpiceJet Support"
+        domain: "spicejet.com"
+    has_amount: false
+
+  - scenario: "Doctor appointment confirmation and pre-visit form"
+    senders:
+      - name: "Apollo 24/7 Clinical Care"
+        domain: "apollo247.com"
+      - name: "Practo Consultations"
+        domain: "practo.com"
+      - name: "Fortis Healthcare Desk"
+        domain: "fortishealthcare.com"
+      - name: "Max Healthcare Patient Desk"
+        domain: "maxhealthcare.in"
+    has_amount: true
+
+  - scenario: "Tax document signature required"
+    senders:
+      - name: "ClearTax India"
+        domain: "cleartax.in"
+      - name: "TaxBuddy Financial"
+        domain: "taxbuddy.com"
+      - name: "Zerodha Tax Desk"
+        domain: "zerodha.com"
+      - name: "Groww Compliance"
+        domain: "groww.in"
+    has_amount: false
+
+  - scenario: "Project proposal deadline extended by 2 hours"
+    senders:
+      - name: "Smart India Hackathon Cell"
+        domain: "sih.gov.in"
+      - name: "Unstop Competitions"
+        domain: "unstop.com"
+      - name: "IEEE India Student Chapter"
+        domain: "ieee.org"
+      - name: "FOSS United Hack"
+        domain: "fossunited.org"
+    has_amount: false
+
+worth_a_look:
+  - scenario: "New features announced for your favorite IDE"
+    senders:
+      - name: "JetBrains Developer Relations"
+        domain: "jetbrains.com"
+      - name: "Visual Studio Code Team"
+        domain: "visualstudio.com"
+      - name: "Cursor Editor Team"
+        domain: "cursor.com"
+      - name: "Zed Editor Project"
+        domain: "zed.dev"
+    has_amount: false
+
+  - scenario: "Call for speakers at upcoming tech conference"
+    senders:
+      - name: "PyCon India Program Committee"
+        domain: "pycon.org.in"
+      - name: "React India Organizers"
+        domain: "reactindia.io"
+      - name: "HasGeek Rootconf"
+        domain: "hasgeek.com"
+      - name: "FOSS United Conference"
+        domain: "fossunited.org"
+    has_amount: false
+
+  - scenario: "Internal job board update with new open roles"
+    senders:
+      - name: "Infosys Internal Mobility"
+        domain: "infosys.com"
+      - name: "TCS Global Talent Track"
+        domain: "tcs.com"
+      - name: "Wipro Career Pulse"
+        domain: "wipro.com"
+      - name: "Swiggy Internal Transfers"
+        domain: "swiggy.in"
+    has_amount: false
+
+  - scenario: "Research grant application open for AI safety projects"
+    senders:
+      - name: "OpenAI Research Grants"
+        domain: "openai.com"
+      - name: "FOSS United Grants"
+        domain: "fossunited.org"
+      - name: "Google Research India"
+        domain: "research.google"
+      - name: "Hugging Face Fellowships"
+        domain: "huggingface.co"
+    has_amount: false
+
+  - scenario: "Early access to the new beta program"
+    senders:
+      - name: "Notion Labs Early Access"
+        domain: "makenotion.com"
+      - name: "Figma Developer Beta"
+        domain: "figma.com"
+      - name: "Raycast Community"
+        domain: "raycast.com"
+      - name: "OpenAI Developer Platform"
+        domain: "openai.com"
+    has_amount: false
+
+  - scenario: "Upcoming webinar on cloud architecture"
+    senders:
+      - name: "AWS India Community"
+        domain: "aws.amazon.com"
+      - name: "Google Cloud Dev Hub"
+        domain: "cloud.google.com"
+      - name: "Confluent Kafka India"
+        domain: "confluent.io"
+      - name: "Datadog Technical Webinars"
+        domain: "datadoghq.com"
+    has_amount: false
+
+  - scenario: "Local meetup for Python developers next week"
+    senders:
+      - name: "Bangalore Python Users Group"
+        domain: "bangpypers.org"
+      - name: "Delhi Python Community"
+        domain: "pyldelhi.org"
+      - name: "PyData Mumbai"
+        domain: "pydatamumbai.org"
+      - name: "FOSS United Meetups"
+        domain: "fossunited.org"
+    has_amount: false
+
+  - scenario: "New open-source project needs contributors"
+    senders:
+      - name: "GitHub Explore Community"
+        domain: "github.com"
+      - name: "FOSS United Grants"
+        domain: "fossunited.org"
+      - name: "Apache Software Foundation India"
+        domain: "apache.org"
+      - name: "Linux Foundation Education"
+        domain: "linuxfoundation.org"
+    has_amount: false
+
+  - scenario: "Fellowship program applications open for open source developers"
+    senders:
+      - name: "MLH Fellowship"
+        domain: "mlh.io"
+      - name: "GitHub Campus Experts"
+        domain: "github.com"
+      - name: "Google Summer of Code"
+        domain: "summerofcode.withgoogle.com"
+      - name: "Linux Foundation Mentorship"
+        domain: "linuxfoundation.org"
+    has_amount: false
+
+  - scenario: "Full scholarship announced for advanced systems programming cohort"
+    senders:
+      - name: "Scaler Academy Scholarships"
+        domain: "scaler.com"
+      - name: "Newton School Fellowship"
+        domain: "newtonschool.co"
+      - name: "GeeksforGeeks Scholar Desk"
+        domain: "geeksforgeeks.org"
+      - name: "Coursera Financial Aid"
+        domain: "coursera.org"
+    has_amount: false
+
+  - scenario: "Notification of a new message from a LinkedIn connection"
+    senders:
+      - name: "LinkedIn Messaging"
+        domain: "linkedin.com"
+      - name: "Peerlist Professional"
+        domain: "peerlist.io"
+      - name: "Wellfound Talent"
+        domain: "wellfound.com"
+      - name: "Polywork Network"
+        domain: "polywork.com"
+    has_amount: false
+
+  - scenario: "Invitation to join a professional networking group"
+    senders:
+      - name: "IEEE Computer Society India"
+        domain: "ieee.org"
+      - name: "ACM India Chapter"
+        domain: "india.acm.org"
+      - name: "HasGeek Community"
+        domain: "hasgeek.com"
+      - name: "FOSS United Core"
+        domain: "fossunited.org"
+    has_amount: false
+
+  - scenario: "Update on company benefits for next year"
+    senders:
+      - name: "TCS Human Resources"
+        domain: "tcs.com"
+      - name: "Infosys Benefits Central"
+        domain: "infosys.com"
+      - name: "Swiggy People Ops"
+        domain: "swiggy.in"
+      - name: "Wipro Employee Benefits"
+        domain: "wipro.com"
+    has_amount: false
+
+  - scenario: "Technical RFC open for review: New distributed database design"
+    senders:
+      - name: "Hashnode Tech Architecture"
+        domain: "hashnode.com"
+      - name: "Dev.to Engineering RFC"
+        domain: "dev.to"
+      - name: "GitHub Discussions"
+        domain: "github.com"
+    has_amount: false
+
+  - scenario: "Beta tester program open for new developer tooling framework"
+    senders:
+      - name: "JetBrains Early Labs"
+        domain: "jetbrains.com"
+      - name: "Postman API Labs"
+        domain: "postman.com"
+      - name: "GitHub Next Experiments"
+        domain: "githubnext.com"
+    has_amount: false
+
+fyi:
+  - scenario: "Receipt for your recent online purchase"
+    senders:
+      - name: "Amazon India Order Billing"
+        domain: "amazon.in"
+      - name: "Flipkart Order Accounts"
+        domain: "flipkart.com"
+      - name: "Myntra Invoices"
+        domain: "myntra.com"
+      - name: "Swiggy Instamart Receipts"
+        domain: "swiggy.in"
+      - name: "Blinkit Quick Delivery"
+        domain: "blinkit.com"
+    has_amount: true
+
+  - scenario: "Your package has shipped and is on the way"
+    senders:
+      - name: "Blue Dart Express"
+        domain: "bluedart.com"
+      - name: "Delhivery Tracking Desk"
+        domain: "delhivery.com"
+      - name: "Amazon Logistics India"
+        domain: "amazon.in"
+      - name: "DTDC Courier Services"
+        domain: "dtdc.com"
+    has_amount: false
+
+  - scenario: "Confirmation of your password change"
+    senders:
+      - name: "Google Account Security"
+        domain: "accounts.google.com"
+      - name: "Microsoft Security Team"
+        domain: "account.microsoft.com"
+      - name: "GitHub Identity"
+        domain: "github.com"
+      - name: "Zerodha Account Security"
+        domain: "zerodha.com"
+    has_amount: false
+
+  - scenario: "Security notice: Successful login from a new device"
+    senders:
+      - name: "HDFC Bank NetBanking Security"
+        domain: "hdfcbank.net"
+      - name: "ICICI Bank SafeBanking"
+        domain: "icicibank.com"
+      - name: "Google Accounts Alert"
+        domain: "accounts.google.com"
+      - name: "Slack Security Team"
+        domain: "slack.com"
+    has_amount: false
+
+  - scenario: "Your monthly bank statement is ready"
+    senders:
+      - name: "HDFC Bank Statements"
+        domain: "hdfcbank.net"
+      - name: "ICICI Bank Operations"
+        domain: "icicibank.com"
+      - name: "State Bank of India Accounts"
+        domain: "sbi.co.in"
+      - name: "Axis Bank Statement Cell"
+        domain: "axisbank.com"
+    has_amount: false
+
+  - scenario: "System status update: All services operational"
+    senders:
+      - name: "AWS Service Health"
+        domain: "aws.amazon.com"
+      - name: "GitHub Status Center"
+        domain: "githubstatus.com"
+      - name: "Cloudflare Status"
+        domain: "cloudflarestatus.com"
+      - name: "Vercel Incident Team"
+        domain: "vercel-status.com"
+    has_amount: false
+
+  - scenario: "GitHub notification: Issue closed"
+    senders:
+      - name: "GitHub Issues"
+        domain: "github.com"
+      - name: "GitLab Tracker"
+        domain: "gitlab.com"
+      - name: "Linear Systems"
+        domain: "linear.app"
+      - name: "Jira Atlassian Service"
+        domain: "atlassian.net"
+    has_amount: false
+
+  - scenario: "Reservation confirmation for dinner tonight"
+    senders:
+      - name: "Zomato Dining Desk"
+        domain: "zomato.com"
+      - name: "EazyDiner Reservations"
+        domain: "eazydiner.com"
+      - name: "Swiggy Dineout Concierge"
+        domain: "swiggy.in"
+    has_amount: false
+
+  - scenario: "Successfully subscribed to the newsletter"
+    senders:
+      - name: "Substack Welcome"
+        domain: "substack.com"
+      - name: "TLDR Newsletter Subscriptions"
+        domain: "tldr.tech"
+      - name: "Morning Brew Hub"
+        domain: "morningbrew.com"
+      - name: "Beehiiv Mail Desk"
+        domain: "beehiiv.com"
+    has_amount: false
+
+  - scenario: "Your data export is ready to download"
+    senders:
+      - name: "Google Takeout Services"
+        domain: "google.com"
+      - name: "Twitter Data Privacy"
+        domain: "x.com"
+      - name: "Notion Data Desk"
+        domain: "makenotion.com"
+      - name: "Spotify Privacy Cell"
+        domain: "spotify.com"
+    has_amount: false
+
+  - scenario: "Welcome to the service, here is your guide"
+    senders:
+      - name: "Notion Onboarding"
+        domain: "makenotion.com"
+      - name: "Canva Design School"
+        domain: "canva.com"
+      - name: "Supabase Platform Care"
+        domain: "supabase.com"
+      - name: "Figma Community Welcome"
+        domain: "figma.com"
+    has_amount: false
+
+  - scenario: "Automatic payment processed successfully"
+    senders:
+      - name: "Netflix India Accounts"
+        domain: "netflix.com"
+      - name: "Spotify Premium India"
+        domain: "spotify.com"
+      - name: "HDFC AutoPay Desk"
+        domain: "hdfcbank.net"
+      - name: "Disney+ Hotstar Accounts"
+        domain: "hotstar.com"
+    has_amount: true
+
+  - scenario: "Meeting notes from yesterday's sync"
+    senders:
+      - name: "Google Meet Transcripts"
+        domain: "google.com"
+      - name: "Zoom AI Companion"
+        domain: "zoom.us"
+      - name: "Microsoft Teams Summaries"
+        domain: "microsoft.com"
+      - name: "Slack Canvas Updates"
+        domain: "slack.com"
+    has_amount: false
+
+  - scenario: "Your flight has been delayed by 30 minutes"
+    senders:
+      - name: "IndiGo Flight Operations"
+        domain: "goindigo.in"
+      - name: "Air India Flight Status"
+        domain: "airindia.com"
+      - name: "Akasa Air Operations"
+        domain: "akasaair.com"
+      - name: "SpiceJet Dispatch"
+        domain: "spicejet.com"
+    has_amount: false
+
+  - scenario: "License renewal receipt for software"
+    senders:
+      - name: "JetBrains Licensing Team"
+        domain: "jetbrains.com"
+      - name: "Docker Subscription Billing"
+        domain: "docker.com"
+      - name: "Microsoft 365 Subscriptions"
+        domain: "microsoft.com"
+      - name: "Figma Billing Operations"
+        domain: "figma.com"
+    has_amount: true
+
+noise:
+  - scenario: "Promotional offer: 50% off all shoes"
+    senders:
+      - name: "Myntra End of Reason Sale"
+        domain: "myntra.com"
+      - name: "Ajio Fashion Carnival"
+        domain: "ajio.com"
+      - name: "Puma India Offers"
+        domain: "puma.com"
+      - name: "Tata CLiQ Deals"
+        domain: "tatacliq.com"
+    has_amount: true
+
+  - scenario: "Weekly newsletter from your favorite brand"
+    senders:
+      - name: "Boat Lifestyle Weekly"
+        domain: "boat-lifestyle.com"
+      - name: "Snitch Fashion Digest"
+        domain: "snitch.co.in"
+      - name: "Bewakoof Insider"
+        domain: "bewakoof.com"
+      - name: "The Souled Store News"
+        domain: "thesouledstore.com"
+    has_amount: false
+
+  - scenario: "Social media notification: Someone liked your post"
+    senders:
+      - name: "Instagram Notifications"
+        domain: "instagram.com"
+      - name: "Twitter / X Activity"
+        domain: "x.com"
+      - name: "LinkedIn Social Ping"
+        domain: "linkedin.com"
+      - name: "Reddit Activity Desk"
+        domain: "reddit.com"
+    has_amount: false
+
+  - scenario: "You have new followers on Twitter"
+    senders:
+      - name: "X / Twitter Community"
+        domain: "x.com"
+      - name: "Threads Follows"
+        domain: "threads.net"
+      - name: "BlueSky Social Desk"
+        domain: "bsky.app"
+    has_amount: false
+
+  - scenario: "Special birthday discount just for you"
+    senders:
+      - name: "Zomato Gold Celebrations"
+        domain: "zomato.com"
+      - name: "Swiggy One Special Offers"
+        domain: "swiggy.in"
+      - name: "BookMyShow Perks"
+        domain: "bookmyshow.com"
+      - name: "Nykaa Birthday Lounge"
+        domain: "nykaa.com"
+    has_amount: true
+
+  - scenario: "Reminder to complete your profile on a forum"
+    senders:
+      - name: "Quora Community Engagement"
+        domain: "quora.com"
+      - name: "GeeksforGeeks Forum"
+        domain: "geeksforgeeks.org"
+      - name: "Reddit Community Setup"
+        domain: "reddit.com"
+    has_amount: false
+
+  - scenario: "Notification of a trending topic in your area"
+    senders:
+      - name: "Twitter / X Local Trends"
+        domain: "x.com"
+      - name: "Inshorts Daily Highlights"
+        domain: "inshorts.com"
+      - name: "Reddit India Digest"
+        domain: "reddit.com"
+    has_amount: false
+
+  - scenario: "Don't miss out on our biggest sale of the year!"
+    senders:
+      - name: "Flipkart Big Billion Days"
+        domain: "flipkart.com"
+      - name: "Amazon Great Indian Festival"
+        domain: "amazon.in"
+      - name: "Croma Festive Electronics"
+        domain: "croma.com"
+      - name: "Meesho Maha Indian Sale"
+        domain: "meesho.com"
+    has_amount: true
+
+  - scenario: "New posts in the group you joined"
+    senders:
+      - name: "LinkedIn Professional Groups"
+        domain: "linkedin.com"
+      - name: "Facebook Community Updates"
+        domain: "facebookmail.com"
+      - name: "Telegram Web Channels"
+        domain: "telegram.org"
+    has_amount: false
+
+  - scenario: "Update to privacy policy and terms of service"
+    senders:
+      - name: "WhatsApp Legal Desk"
+        domain: "whatsapp.com"
+      - name: "Meta Privacy Operations"
+        domain: "meta.com"
+      - name: "Uber India Terms"
+        domain: "uber.com"
+      - name: "Ola Cabs Legal"
+        domain: "olacabs.com"
+    has_amount: false
+
+  - scenario: "Join our rewards program today"
+    senders:
+      - name: "CRED Rewards Desk"
+        domain: "cred.club"
+      - name: "Paytm Cashback Operations"
+        domain: "paytm.com"
+      - name: "Tata Neu Rewards"
+        domain: "tataneu.com"
+      - name: "Times Prime Privilege"
+        domain: "timesprime.com"
+    has_amount: false
+
+  - scenario: "Items left in your cart - complete your purchase"
+    senders:
+      - name: "Lenskart Cart Reminder"
+        domain: "lenskart.com"
+      - name: "Myntra Bag Assistant"
+        domain: "myntra.com"
+      - name: "Amazon India Cart Concierge"
+        domain: "amazon.in"
+      - name: "Ajio Cart Recovery"
+        domain: "ajio.com"
+    has_amount: true
+
+  - scenario: "Invitation to rate your recent support experience"
+    senders:
+      - name: "Swiggy Customer Experience"
+        domain: "swiggy.in"
+      - name: "Zomato Support Feedback"
+        domain: "zomato.com"
+      - name: "Urban Company Quality Desk"
+        domain: "urbancompany.com"
+      - name: "Uber India Support Care"
+        domain: "uber.com"
+    has_amount: false
+
+  - scenario: "Monthly summary of your app usage"
+    senders:
+      - name: "Duolingo Language Streak"
+        domain: "duolingo.com"
+      - name: "Strava India Community"
+        domain: "strava.com"
+      - name: "Spotify Insights"
+        domain: "spotify.com"
+      - name: "Forest App Productivity"
+        domain: "forestapp.cc"
+    has_amount: false
+
+  - scenario: "Win a free gift card by entering our sweepstakes"
+    senders:
+      - name: "Amazon Pay Rewards Contest"
+        domain: "amazon.in"
+      - name: "Flipkart SuperCoins Games"
+        domain: "flipkart.com"
+      - name: "Paytm UPI Scratch Cards"
+        domain: "paytm.com"
+    has_amount: true
