@@ -2,3 +2,5 @@ tinker
 python-dotenv
 requests
 numpy
+flask
+gunicorn
