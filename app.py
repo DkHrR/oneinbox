@@ -310,7 +310,6 @@ def create_app():
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     <script>
         tailwind.config = {
-            darkMode: 'media',
             theme: {
                 extend: {
                     colors: {
@@ -326,23 +325,12 @@ def create_app():
     </script>
     <style>
         :root {
-            /* Soft Light Mode */
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --border: #e2e8f0;
-            --text-main: #0f172a;
-            --text-muted: #64748b;
-        }
-
-        @media (prefers-color-scheme: dark) {
-            :root {
-                /* Ultra-soft, premium Dark Mode (Not pitch black) */
-                --bg: #09090b;
-                --surface: #121214;
-                --border: #27272a;
-                --text-main: #fafafa;
-                --text-muted: #a1a1aa;
-            }
+            /* Warm Cream / Paper Aesthetic */
+            --bg: #fcfbf8;           /* Beautiful soft cream background */
+            --surface: #ffffff;      /* Pure white cards */
+            --border: #e5e5e0;       /* Soft warm border */
+            --text-main: #292524;    /* Stone-800 (warm dark gray instead of harsh black) */
+            --text-muted: #78716c;   /* Stone-500 */
         }
 
         body {
@@ -355,13 +343,13 @@ def create_app():
         /* Minimal scrollbar */
         ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 10px; }
 
         .app-card {
             background-color: var(--surface);
             border: 1px solid var(--border);
             border-radius: 16px;
-            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.03);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
@@ -370,8 +358,8 @@ def create_app():
         
         .app-card:hover {
             transform: translateY(-4px);
-            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.15);
-            border-color: rgba(156, 163, 175, 0.3);
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.08);
+            border-color: #d6d3d1;
         }
 
         .btn-action {
@@ -379,30 +367,23 @@ def create_app():
             font-weight: 500;
             padding: 8px 12px;
             border-radius: 8px;
-            background: var(--bg);
-            border: 1px solid var(--border);
+            background: #f5f5f4;
+            border: 1px solid #e7e5e4;
             color: var(--text-main);
             transition: all 0.2s;
             text-align: center;
         }
         .btn-action:hover {
-            background: var(--border);
+            background: #e7e5e4;
         }
         
         .btn-primary {
-            background: #18181b;
+            background: var(--text-main);
             color: #fff;
-            border-color: #18181b;
+            border-color: var(--text-main);
         }
-        @media (prefers-color-scheme: dark) {
-            .btn-primary {
-                background: #fafafa;
-                color: #000;
-                border-color: #fafafa;
-            }
-            .btn-primary:hover {
-                background: #e4e4e7;
-            }
+        .btn-primary:hover {
+            background: #44403c;
         }
 
         .nav-item {
@@ -417,12 +398,12 @@ def create_app():
             transition: all 0.2s;
         }
         .nav-item:hover, .nav-item.active {
-            background: var(--surface);
+            background: #f5f5f4;
             color: var(--text-main);
-            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.02);
             border: 1px solid var(--border);
         }
-        .nav-item { border: 1px solid transparent; } /* align padding */
+        .nav-item { border: 1px solid transparent; }
         
         .category-dot {
             width: 8px;
@@ -430,10 +411,9 @@ def create_app():
             border-radius: 50%;
         }
 
-        /* Subtle, non-hostile colors */
-        .color-urgent { background-color: #f43f5e; } /* Soft Rose instead of harsh red */
-        .color-look { background-color: #6366f1; } /* Indigo */
-        .color-fyi { background-color: #14b8a6; } /* Teal */
+        .color-urgent { background-color: #f43f5e; }
+        .color-look { background-color: #6366f1; }
+        .color-fyi { background-color: #14b8a6; }
     </style>
 </head>
 <body class="flex h-screen overflow-hidden">
@@ -449,15 +429,15 @@ def create_app():
             <div class="text-[10px] uppercase tracking-widest textMuted font-semibold px-3 mb-2">Categories</div>
             <a href="#action-required" class="nav-item">
                 <span class="category-dot color-urgent"></span> Action Required
-                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.must_act|length }}</span>
+                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.must_act|length }}</span>
             </a>
             <a href="#worth-look" class="nav-item">
                 <span class="category-dot color-look"></span> Worth a Look
-                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.worth_a_look|length }}</span>
+                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.worth_a_look|length }}</span>
             </a>
             <a href="#fyi" class="nav-item">
                 <span class="category-dot color-fyi"></span> FYI
-                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.fyi|length }}</span>
+                <span class="ml-auto text-[10px] bg-white border border-border px-2 py-0.5 rounded-full">{{ digest.fyi|length }}</span>
             </a>
         </nav>
 
@@ -474,7 +454,7 @@ def create_app():
         <!-- Top Header -->
         <header class="h-16 border-b border-border bg-surface/50 backdrop-blur-md flex items-center justify-between px-8 shrink-0 z-10 sticky top-0">
             <div class="text-xs font-medium textMuted">{{ digest.generated_at }}</div>
-            <div class="px-3 py-1.5 rounded-full bg-border/50 text-xs font-medium textMain">
+            <div class="px-3 py-1.5 rounded-full bg-white border border-border shadow-sm text-xs font-medium textMain">
                 {{ digest.total_count }} Emails Analyzed
             </div>
         </header>
@@ -483,14 +463,14 @@ def create_app():
         <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth">
             
             {% if digest.mode == 'Demo (Sample Emails)' %}
-            <div class="mb-8 border border-amber-200/50 bg-amber-50 dark:bg-amber-500/10 dark:border-amber-500/20 rounded-xl p-3 text-amber-700 dark:text-amber-400 text-xs font-medium flex items-center justify-center">
+            <div class="mb-8 border border-amber-200/50 bg-amber-50 rounded-xl p-3 text-amber-700 text-xs font-medium flex items-center justify-center">
                 Demo Mode: Viewing synthetic sample emails
             </div>
             {% endif %}
 
             <!-- Welcome Banner -->
             <div class="mb-12">
-                <h2 class="text-3xl font-medium tracking-tight mb-2">Good morning.</h2>
+                <h2 class="text-3xl font-medium tracking-tight mb-2 text-stone-800">Good morning.</h2>
                 <p class="textMuted max-w-2xl text-sm leading-relaxed">You have <strong class="textMain">{{ digest.must_act|length }} tasks</strong> requiring attention and <strong class="textMain">{{ digest.worth_a_look|length }} updates</strong> worth reading today. The rest has been filtered.</p>
             </div>
 
@@ -508,7 +488,7 @@ def create_app():
                             <div class="flex justify-between items-start mb-3">
                                 <div class="text-[10px] font-semibold textMuted uppercase tracking-wider">{{ item.from }}</div>
                                 {% if item.deadline %}
-                                <div class="bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400 px-2 py-0.5 rounded text-[10px] font-semibold border border-rose-200 dark:border-rose-500/20">
+                                <div class="bg-rose-50 text-rose-600 px-2 py-0.5 rounded text-[10px] font-semibold border border-rose-100">
                                     Due: {{ item.deadline }}
                                 </div>
                                 {% endif %}
@@ -516,14 +496,14 @@ def create_app():
                             <h4 class="text-base font-semibold textMain mb-2 leading-snug">{{ item.subject }}</h4>
                             <p class="text-sm textMuted leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
                             
-                            <div class="text-[11px] textMuted bg-bg p-2.5 rounded-lg border border-border mb-5">
+                            <div class="text-[11px] textMuted bg-[#f5f5f4] p-2.5 rounded-lg border border-border mb-5">
                                 <strong>Reason:</strong> {{ item.why }}
                             </div>
                             
                             <div class="grid grid-cols-2 gap-2 mt-auto">
                                 <a href="{{ item.ignore_link }}" class="btn-action col-span-2">Ignore Sender</a>
                                 <a href="{{ item.good_link }}" class="btn-action btn-primary">Accurate</a>
-                                <a href="{{ item.wrong_link }}" class="btn-action">Wrong</a>
+                                <a href="{{ item.wrong_link }}" class="btn-action bg-white">Wrong</a>
                             </div>
                         </div>
                     </div>
@@ -574,8 +554,8 @@ def create_app():
                         <p class="text-xs textMuted leading-relaxed mb-4 line-clamp-2 flex-1">{{ item.summary }}</p>
                         
                         <div class="flex gap-2 mt-auto border-t border-border pt-3">
-                            <a href="{{ item.always_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-bg py-1.5 rounded transition-colors">Always Show</a>
-                            <a href="{{ item.ignore_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-bg py-1.5 rounded transition-colors">Ignore</a>
+                            <a href="{{ item.always_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-[#f5f5f4] py-1.5 rounded transition-colors">Always Show</a>
+                            <a href="{{ item.ignore_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-[#f5f5f4] py-1.5 rounded transition-colors">Ignore</a>
                         </div>
                     </div>
                     {% endfor %}
