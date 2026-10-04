@@ -93,7 +93,7 @@ python app.py --imap --dry-run
 ### Storage Design: Shared State across Render Containers
 - On Render's free tier, Web Services and Cron Jobs run in isolated ephemeral containers and cannot share a local filesystem.
 - Furthermore, Render free web services spin down after 15 minutes of inactivity.
-- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the cron job finishes, it persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard without requiring paid Render persistent disks.
+- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the cron job finishes, it persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard. This utilizes Render's $50 free credit for compute, while Backboard's free tier covers our memory needs, avoiding paid Render persistent disks.
 
 ---
 

@@ -85,12 +85,21 @@ def save_digest_to_backboard(api_key: str, assistant_id: str, digest_data: dict)
 def get_digest_from_backboard(api_key: str, assistant_id: str) -> dict | None:
     try:
         mems = list_memories(api_key, assistant_id)
-        # Find latest DIGEST_SNAPSHOT
+        # Find all DIGEST_SNAPSHOT memories
+        snapshots = []
         for mem in mems:
             content = mem.get("content", "")
             if content.startswith("DIGEST_SNAPSHOT: "):
-                raw = content[len("DIGEST_SNAPSHOT: "):]
-                return json.loads(raw)
+                snapshots.append(mem)
+        
+        if not snapshots:
+            return None
+            
+        # Pick the newest by created_at
+        # Assuming mem has a 'created_at' field (ISO8601 string or timestamp)
+        newest = max(snapshots, key=lambda x: x.get("created_at", ""))
+        raw = newest.get("content", "")[len("DIGEST_SNAPSHOT: "):]
+        return json.loads(raw)
     except Exception as e:
         logger.warning(f"Could not retrieve digest snapshot from Backboard: {e}")
     return None
