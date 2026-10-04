@@ -26,8 +26,8 @@ It categorizes incoming emails into four actionable tiers:
    - User preferences (`RULE: always_show sender=...` and `RULE: ignore sender=...`) are retrieved directly from Backboard memories.
    - Rules are parsed and applied deterministically in code—never relying on probabilistic semantic search for classification decisions.
 5. **Mobile Digest Web Service & HMAC Feedback**:
-   - A lightweight Flask service serving `/digest?token=...` protected by `DIGEST_TOKEN`.
-   - Each item includes one-click feedback buttons (`Always Show Sender`, `Ignore Sender`, `Accurate ✓`, `Wrong ✗`).
+   - A lightweight Flask service serving `/digest?token=...` protected by `DIGEST_TOKEN`. The page shows timestamps in UTC.
+   - Each item includes one-click feedback buttons (`Always show`, `Silence sender`, `Accurate`, `Wrong`).
    - Links are signed with an HMAC-SHA256 signature using `FEEDBACK_SECRET`. When tapped, the web service verifies the signature, appends the preference rule to Backboard memory, and confirms the update. The next digest automatically honors the updated rule.
 
 ---
@@ -42,7 +42,7 @@ Configure these in `.env` (or in the Render dashboard for cloud deployment):
 | `BACKBOARD_API_KEY` | API key for Backboard assistant memory storage. |
 | `BACKBOARD_ASSISTANT_ID` | Assistant ID for OneInbox on Backboard. |
 | `DIGEST_TOKEN` | Secret URL token required to access `/digest?token=...`. |
-| `INGEST_TOKEN` | Secret authorization token used by the cron job to POST the digest to the web service. |
+| `INGEST_TOKEN` | Secret authorization token used by the daily digest workflow (`.github/workflows/daily_digest.yml`) to POST the digest to the web service. |
 | `FEEDBACK_SECRET` | HMAC secret key used to sign and verify feedback links. |
 | `APP_BASE_URL` | Base URL of the web service (e.g. `http://localhost:5000` or `https://oneinbox.onrender.com`). |
 | `IMAP_HOST` | *(Optional for IMAP mode)* e.g. `imap.gmail.com`. |
@@ -85,17 +85,16 @@ python app.py --imap --dry-run
 
 ---
 
-## Deployment on Render (`render.yaml`)
+## Deployment on Render (`render.yaml`) & GitHub Actions
 
-`render.yaml` defines:
-1. **Web Service** (`oneinbox-web`): Runs Gunicorn serving the mobile digest and HMAC feedback endpoints.
-2. **Cron Job** (`oneinbox-daily-digest`): Runs `python app.py` daily at 01:30 UTC (07:00 IST).
+The system runs on a 100% free-tier split architecture:
+1. **Web Service on Render** (`oneinbox-web`): Defined in `render.yaml`, runs Gunicorn on Render's free web plan to serve the mobile digest and HMAC feedback endpoints. Render hosts only the web service.
+2. **Daily Digest on GitHub Actions** (`.github/workflows/daily_digest.yml`): Runs `python app.py` daily at 01:30 UTC (07:00 IST), not a Render cron job. GitHub scheduled runs can be delayed by a few minutes, and the workflow can also be started manually with "Run workflow".
 
-### Storage Design: Shared State across Render Containers
-- Web Services and Cron Jobs run in isolated ephemeral containers and cannot share a local filesystem.
-- **Render Pricing**: The web service runs on the free plan, but Render cron jobs require the starter plan ($1/month minimum per cron job; Render has no free cron).
+### Storage Design: Shared State across Services
+- The web service and GitHub Actions runner operate in separate environments and cannot share a local filesystem.
 - Furthermore, Render free web services spin down after 15 minutes of inactivity.
-- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the cron job finishes, it persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard. This utilizes Render's $50 credit for compute, while Backboard's free tier covers our memory needs, avoiding paid Render persistent disks.
+- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the daily digest workflow completes on GitHub Actions, it posts the digest to the web service `/ingest` endpoint and persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard, keeping the entire architecture 100% free without paid persistent disks.
 
 ---
 
@@ -112,7 +111,8 @@ python app.py --imap --dry-run
 
 ## Known limits
 
-- **Backboard Memory Capacity**: Backboard memories have a character limit of 4,000 characters. With compressed JSON snapshots averaging ~128 stored characters per email (measured from the real 25-email run at 3,194 characters), approximately **31 real emails** fit under the 4,000 limit before snapshot capacity is reached.
-- **Synthetic Validation Dataset**: The training set and validation benchmark (`data/val.jsonl`) consist of synthetic emails designed to capture distribution shifts, deadlines, and urgency phrasing. The 96.67% accuracy was measured against this synthetic distribution.
-- **IMAP Pipeline Untested on Live Inboxes**: While the IMAP pipeline implements standard RFC822 parsing, PII redaction, and read-only fetching, it has not yet been benchmarked on a live production inbox with complex HTML multipart layouts.
+- **Backboard Memory Capacity**: Backboard memories have a character limit of 4,000 characters. With compressed JSON snapshots averaging ~128 stored characters per email (measured from the real 25-email run at 3,194 characters), approximately **31 real emails** fit under the 4,000 limit before snapshot capacity is reached. The digest is limited to about 31 emails by Backboard's memory size.
+- **Synthetic Benchmark & Generator-Made Labels**: The training set and validation benchmark (`data/val.jsonl`) consist of synthetic emails designed to capture distribution shifts, deadlines, and urgency phrasing. The test set is synthetic with generator-made labels.
+- **IMAP Mode Untested on Real Inboxes**: While the IMAP pipeline implements standard RFC822 parsing, PII redaction, and read-only fetching, IMAP mode is untested on a real inbox with complex HTML multipart layouts.
+- **Feedback Scope**: Accurate/Wrong feedback is logged but does not change filtering (only preference rules like `always_show` and `ignore` change routing).
 - **Fine-Tuned Pricing Model**: The Tinker documentation rate card (`https://tinker-docs.thinkingmachines.ai/tinker/models/index.md`) lists base model rates for Qwen3.5-4B ($0.33/M prompt, $1.005/M sample) but does not list a separate rate for sampling a fine-tuned LoRA checkpoint. Evaluation and usage costs for the fine-tuned model are computed assuming the base model rate.

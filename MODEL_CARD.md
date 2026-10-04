@@ -13,7 +13,7 @@ tags:
 
 # OneInbox Qwen3.5-4B LoRA Adapter
 
-This repository contains LoRA adapter weights fine-tuned from **Qwen/Qwen3.5-4B** using **Tinker**. The adapter powers [OneInbox](https://github.com/amoldeep/oneinbox), an intelligent, privacy-first daily email digest assistant that classifies incoming messages into actionable priority tiers and extracts strict deadlines.
+This repository contains LoRA adapter weights fine-tuned from **Qwen/Qwen3.5-4B** using **Tinker**. The adapter powers [OneInbox](https://github.com/DkHrR/oneinbox), an intelligent, privacy-first daily email digest assistant that classifies incoming messages into actionable priority tiers and extracts strict deadlines.
 
 ## Training Details
 
@@ -59,6 +59,8 @@ Evaluated on `data/val.jsonl` (60 held-out synthetic emails, 28 containing non-n
 
 ## Honest Limitations
 
-1. **Synthetic Training Distribution**: The 540 training emails and 60 validation emails are synthetically generated. While designed with realistic edge cases and varied phrasing, performance on real-world email distributions with noisy formatting or multipart HTML may vary.
-2. **Untested on Production Inboxes**: The pipeline and fine-tuned model have not yet been evaluated on real-world corporate or personal inboxes due to privacy considerations.
-3. **Inference Pricing Assumption**: The official Tinker pricing documentation lists base Qwen3.5-4B rates ($0.33/M prompt tokens, $1.005/M completion tokens) but does not provide a distinct rate for sampling fine-tuned checkpoints. The reported cost per 1,000 emails ($0.1412) assumes base model pricing.
+1. **Synthetic Benchmark & Generator-Made Labels**: The 540 training emails and 60 validation emails are synthetically generated, and the test set is synthetic with generator-made labels. While designed with realistic edge cases, urgent deadlines, and varied phrasing, performance on real-world email distributions with noisy formatting or multipart HTML may vary.
+2. **Untested on Real Inboxes**: IMAP mode is untested on a real inbox due to privacy considerations.
+3. **Feedback Behavior**: Accurate/Wrong feedback is logged to Backboard but does not change filtering (only deterministic user preference rules like `always_show` and `ignore` modify routing).
+4. **Digest Memory Limit**: The digest snapshot is limited to about 31 emails by Backboard's 4,000-character memory capacity.
+5. **Inference Pricing Assumption**: The official Tinker pricing documentation lists base Qwen3.5-4B rates ($0.33/M prompt tokens, $1.005/M completion tokens) but does not provide a distinct rate for sampling fine-tuned checkpoints. The reported cost per 1,000 emails ($0.1412) assumes base model pricing.

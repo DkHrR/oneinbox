@@ -525,7 +525,7 @@ def create_app():
         <!-- Header -->
         <header class="mb-8">
             <h1 class="text-2xl font-semibold mb-1">Good morning.</h1>
-            <p class="text-sm text-muted">Updated {{ digest.generated_at }}</p>
+            <p class="text-sm text-muted">Updated {{ digest.generated_at }} UTC</p>
         </header>
 
         {% if digest.mode == 'Demo (Sample Emails)' %}
