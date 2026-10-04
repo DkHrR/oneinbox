@@ -77,12 +77,18 @@ def parse_rules(memories: list[dict]) -> tuple[set[str], set[str]]:
 def save_digest_to_backboard(api_key: str, assistant_id: str, digest_data: dict):
     # Store snapshot as a memory for cross-container retrieval on Render free tier
     try:
-        content = "DIGEST_SNAPSHOT: " + json.dumps(digest_data)
+        raw_json = json.dumps(digest_data)
+        if len(raw_json) > 3500:
+            import zlib, base64
+            content = "DIGEST_SNAPSHOT_Z:" + base64.b64encode(zlib.compress(raw_json.encode("utf-8"))).decode("ascii")
+        else:
+            content = "DIGEST_SNAPSHOT: " + raw_json
+
         add_memory(api_key, assistant_id, content)
         
         # Cleanup old snapshots
         mems = list_memories(api_key, assistant_id)
-        snapshot_mems = [m for m in mems if m.get("content", "").startswith("DIGEST_SNAPSHOT: ")]
+        snapshot_mems = [m for m in mems if m.get("content", "").startswith("DIGEST_SNAPSHOT: ") or m.get("content", "").startswith("DIGEST_SNAPSHOT_Z:")]
         # Sort descending by created_at, keep first
         snapshot_mems.sort(key=lambda x: x.get("created_at", ""), reverse=True)
         for old_mem in snapshot_mems[1:]:
@@ -100,17 +106,23 @@ def get_digest_from_backboard(api_key: str, assistant_id: str) -> dict | None:
         snapshots = []
         for mem in mems:
             content = mem.get("content", "")
-            if content.startswith("DIGEST_SNAPSHOT: "):
+            if content.startswith("DIGEST_SNAPSHOT: ") or content.startswith("DIGEST_SNAPSHOT_Z:"):
                 snapshots.append(mem)
         
         if not snapshots:
             return None
             
         # Pick the newest by created_at
-        # Assuming mem has a 'created_at' field (ISO8601 string or timestamp)
         newest = max(snapshots, key=lambda x: x.get("created_at", ""))
-        raw = newest.get("content", "")[len("DIGEST_SNAPSHOT: "):]
-        return json.loads(raw)
+        content = newest.get("content", "")
+        if content.startswith("DIGEST_SNAPSHOT_Z:"):
+            import zlib, base64
+            compressed_str = content[len("DIGEST_SNAPSHOT_Z:"):]
+            raw = zlib.decompress(base64.b64decode(compressed_str)).decode("utf-8")
+            return json.loads(raw)
+        else:
+            raw = content[len("DIGEST_SNAPSHOT: "):]
+            return json.loads(raw)
     except Exception as e:
         logger.warning(f"Could not retrieve digest snapshot from Backboard: {e}")
     return None
