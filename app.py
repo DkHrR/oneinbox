@@ -305,188 +305,225 @@ def create_app():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneInbox Dashboard</title>
+    <title>OneInbox | Morning Digest</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'media',
+            theme: {
+                extend: {
+                    colors: {
+                        background: 'var(--bg)',
+                        surface: 'var(--surface)',
+                        border: 'var(--border)',
+                        textMain: 'var(--text-main)',
+                        textMuted: 'var(--text-muted)'
+                    }
+                }
+            }
+        }
+    </script>
     <style>
+        :root {
+            /* Soft Light Mode */
+            --bg: #f8fafc;
+            --surface: #ffffff;
+            --border: #e2e8f0;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                /* Ultra-soft, premium Dark Mode (Not pitch black) */
+                --bg: #09090b;
+                --surface: #121214;
+                --border: #27272a;
+                --text-main: #fafafa;
+                --text-muted: #a1a1aa;
+            }
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            background-color: #000000;
-            color: #ffffff;
+            background-color: var(--bg);
+            color: var(--text-main);
             -webkit-font-smoothing: antialiased;
         }
 
         /* Minimal scrollbar */
-        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar { width: 4px; height: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #333; border-radius: 10px; }
+        ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 10px; }
 
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.02);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-        }
-
-        .dashboard-card {
-            background: rgba(255, 255, 255, 0.03);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        .app-card {
+            background-color: var(--surface);
+            border: 1px solid var(--border);
             border-radius: 16px;
-            transition: all 0.2s ease;
+            box-shadow: 0 4px 20px -4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             display: flex;
             flex-direction: column;
             height: 100%;
         }
         
-        .dashboard-card:hover {
-            border-color: rgba(255, 255, 255, 0.15);
-            transform: translateY(-2px);
-            background: rgba(255, 255, 255, 0.05);
-            box-shadow: 0 10px 30px -10px rgba(0,0,0,0.5);
-        }
-
-        .dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            display: inline-block;
+        .app-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px -8px rgba(0, 0, 0, 0.15);
+            border-color: rgba(156, 163, 175, 0.3);
         }
 
         .btn-action {
             font-size: 0.75rem;
             font-weight: 500;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: 8px;
-            background: rgba(255, 255, 255, 0.05);
-            color: rgba(255, 255, 255, 0.8);
+            background: var(--bg);
+            border: 1px solid var(--border);
+            color: var(--text-main);
             transition: all 0.2s;
-            text-decoration: none;
             text-align: center;
         }
         .btn-action:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: var(--border);
+        }
+        
+        .btn-primary {
+            background: #18181b;
             color: #fff;
+            border-color: #18181b;
+        }
+        @media (prefers-color-scheme: dark) {
+            .btn-primary {
+                background: #fafafa;
+                color: #000;
+                border-color: #fafafa;
+            }
+            .btn-primary:hover {
+                background: #e4e4e7;
+            }
         }
 
         .nav-item {
             display: flex;
             align-items: center;
             gap: 12px;
-            padding: 10px 16px;
+            padding: 8px 12px;
             border-radius: 8px;
-            color: rgba(255,255,255,0.6);
+            color: var(--text-muted);
             font-size: 0.875rem;
             font-weight: 500;
             transition: all 0.2s;
-            text-decoration: none;
         }
         .nav-item:hover, .nav-item.active {
-            background: rgba(255,255,255,0.05);
-            color: #fff;
+            background: var(--surface);
+            color: var(--text-main);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.05);
+            border: 1px solid var(--border);
         }
+        .nav-item { border: 1px solid transparent; } /* align padding */
+        
+        .category-dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        /* Subtle, non-hostile colors */
+        .color-urgent { background-color: #f43f5e; } /* Soft Rose instead of harsh red */
+        .color-look { background-color: #6366f1; } /* Indigo */
+        .color-fyi { background-color: #14b8a6; } /* Teal */
     </style>
 </head>
-<body class="flex h-screen overflow-hidden selection:bg-white/20">
+<body class="flex h-screen overflow-hidden">
 
     <!-- Left Sidebar -->
-    <aside class="w-64 border-r border-white/10 glass-panel flex flex-col h-full hidden md:flex shrink-0">
-        <div class="p-6">
-            <h1 class="text-xl font-semibold tracking-tight text-white mb-1">OneInbox<span class="text-blue-500">.</span></h1>
-            <div class="text-xs text-gray-500">Neural Digest</div>
+    <aside class="w-64 border-r border-border bg-background flex flex-col h-full hidden md:flex shrink-0">
+        <div class="p-6 pb-2">
+            <h1 class="text-xl font-semibold tracking-tight mb-1">OneInbox</h1>
+            <div class="text-xs textMuted">Your morning digest.</div>
         </div>
         
-        <nav class="flex-1 px-4 space-y-2 overflow-y-auto">
-            <div class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold px-4 mb-2 mt-4">Overview</div>
-            <a href="#" class="nav-item active">
-                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path></svg>
-                Dashboard
-            </a>
-            <div class="text-[10px] uppercase tracking-widest text-gray-500 font-semibold px-4 mb-2 mt-8">Categories</div>
+        <nav class="flex-1 px-4 space-y-1 overflow-y-auto mt-6">
+            <div class="text-[10px] uppercase tracking-widest textMuted font-semibold px-3 mb-2">Categories</div>
             <a href="#action-required" class="nav-item">
-                <span class="dot bg-red-500 shadow-[0_0_8px_#ef4444]"></span> Action Required
-                <span class="ml-auto bg-white/10 text-white/60 px-2 py-0.5 rounded-md text-xs">{{ digest.must_act|length }}</span>
+                <span class="category-dot color-urgent"></span> Action Required
+                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.must_act|length }}</span>
             </a>
             <a href="#worth-look" class="nav-item">
-                <span class="dot bg-blue-500"></span> Worth a Look
-                <span class="ml-auto bg-white/10 text-white/60 px-2 py-0.5 rounded-md text-xs">{{ digest.worth_a_look|length }}</span>
+                <span class="category-dot color-look"></span> Worth a Look
+                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.worth_a_look|length }}</span>
             </a>
             <a href="#fyi" class="nav-item">
-                <span class="dot bg-emerald-500"></span> FYI
-                <span class="ml-auto bg-white/10 text-white/60 px-2 py-0.5 rounded-md text-xs">{{ digest.fyi|length }}</span>
+                <span class="category-dot color-fyi"></span> FYI
+                <span class="ml-auto text-[10px] bg-border px-2 py-0.5 rounded-full">{{ digest.fyi|length }}</span>
             </a>
         </nav>
 
-        <div class="p-6 border-t border-white/5">
-            <div class="text-xs text-gray-500">Status</div>
-            <div class="flex items-center gap-2 text-sm font-medium text-emerald-400 mt-1">
-                <span class="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_#10b981]"></span> Backboard Active
+        <div class="p-6 border-t border-border">
+            <div class="flex items-center gap-2 text-xs font-medium textMuted">
+                <span class="w-1.5 h-1.5 rounded-full bg-teal-500"></span> Backboard Sync Active
             </div>
         </div>
     </aside>
 
     <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden bg-black relative">
+    <main class="flex-1 flex flex-col h-full overflow-hidden bg-background">
         
-        <!-- Ambient Glow for Dashboard -->
-        <div class="absolute top-0 right-0 w-[800px] h-[500px] bg-blue-500/10 blur-[120px] rounded-full pointer-events-none -z-10 transform translate-x-1/2 -translate-y-1/2"></div>
-        <div class="absolute bottom-0 left-0 w-[600px] h-[400px] bg-red-500/5 blur-[100px] rounded-full pointer-events-none -z-10 transform -translate-x-1/2 translate-y-1/2"></div>
-
         <!-- Top Header -->
-        <header class="h-20 border-b border-white/10 glass-panel flex items-center justify-between px-8 shrink-0 z-10">
-            <div>
-                <div class="text-xs font-medium text-gray-400">Generated: {{ digest.generated_at }}</div>
-            </div>
-            <div class="flex items-center gap-4">
-                <div class="px-4 py-2 rounded-full bg-white/5 border border-white/10 text-sm font-medium text-gray-300">
-                    {{ digest.total_count }} Emails Analyzed
-                </div>
+        <header class="h-16 border-b border-border bg-surface/50 backdrop-blur-md flex items-center justify-between px-8 shrink-0 z-10 sticky top-0">
+            <div class="text-xs font-medium textMuted">{{ digest.generated_at }}</div>
+            <div class="px-3 py-1.5 rounded-full bg-border/50 text-xs font-medium textMain">
+                {{ digest.total_count }} Emails Analyzed
             </div>
         </header>
 
         <!-- Scrollable Grid Area -->
-        <div class="flex-1 overflow-y-auto p-8 scroll-smooth z-10">
+        <div class="flex-1 overflow-y-auto p-6 md:p-10 scroll-smooth">
             
             {% if digest.mode == 'Demo (Sample Emails)' %}
-            <div class="mb-8 border border-orange-500/30 bg-orange-500/10 rounded-xl p-4 text-orange-400 text-sm font-medium">
-                Demo Mode Active: Displaying synthetic archived sample emails.
+            <div class="mb-8 border border-amber-200/50 bg-amber-50 dark:bg-amber-500/10 dark:border-amber-500/20 rounded-xl p-3 text-amber-700 dark:text-amber-400 text-xs font-medium flex items-center justify-center">
+                Demo Mode: Viewing synthetic sample emails
             </div>
             {% endif %}
 
             <!-- Welcome Banner -->
-            <div class="mb-12 p-8 rounded-2xl border border-white/10 bg-gradient-to-r from-white/5 to-transparent">
-                <h2 class="text-3xl font-semibold mb-2">Good morning.</h2>
-                <p class="text-gray-400 max-w-2xl">Your inbox has been processed. You have <strong class="text-white">{{ digest.must_act|length }} tasks</strong> requiring your attention and <strong class="text-white">{{ digest.worth_a_look|length }} updates</strong> worth reading today.</p>
+            <div class="mb-12">
+                <h2 class="text-3xl font-medium tracking-tight mb-2">Good morning.</h2>
+                <p class="textMuted max-w-2xl text-sm leading-relaxed">You have <strong class="textMain">{{ digest.must_act|length }} tasks</strong> requiring attention and <strong class="textMain">{{ digest.worth_a_look|length }} updates</strong> worth reading today. The rest has been filtered.</p>
             </div>
 
             {% if digest.must_act %}
             <div id="action-required" class="mb-12">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="w-3 h-3 rounded-full bg-red-500 shadow-[0_0_12px_#ef4444]"></span>
-                    <h3 class="text-xl font-semibold text-white">Action Required</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-red-500/20 to-transparent ml-4"></div>
+                    <span class="w-2.5 h-2.5 rounded-full color-urgent"></span>
+                    <h3 class="text-lg font-medium textMain">Action Required</h3>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                     {% for item in digest.must_act %}
-                    <div class="dashboard-card relative overflow-hidden group">
-                        <div class="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-red-500/80 to-red-500/20"></div>
+                    <div class="app-card">
                         <div class="p-6 flex-1 flex flex-col">
-                            <div class="text-xs font-semibold text-red-400 uppercase tracking-wider mb-2 flex justify-between items-start">
-                                <span>{{ item.from }}</span>
+                            <div class="flex justify-between items-start mb-3">
+                                <div class="text-[10px] font-semibold textMuted uppercase tracking-wider">{{ item.from }}</div>
                                 {% if item.deadline %}
-                                <span class="bg-red-500/20 text-red-400 px-2 py-1 rounded border border-red-500/30">{{ item.deadline }}</span>
+                                <div class="bg-rose-100 text-rose-700 dark:bg-rose-500/10 dark:text-rose-400 px-2 py-0.5 rounded text-[10px] font-semibold border border-rose-200 dark:border-rose-500/20">
+                                    Due: {{ item.deadline }}
+                                </div>
                                 {% endif %}
                             </div>
-                            <h4 class="text-lg font-semibold text-white mb-3">{{ item.subject }}</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
-                            <div class="text-xs text-gray-500 bg-black/50 p-3 rounded-lg border border-white/5 mb-6">
-                                <span class="text-gray-400 font-medium">AI Reason:</span> {{ item.why }}
+                            <h4 class="text-base font-semibold textMain mb-2 leading-snug">{{ item.subject }}</h4>
+                            <p class="text-sm textMuted leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
+                            
+                            <div class="text-[11px] textMuted bg-bg p-2.5 rounded-lg border border-border mb-5">
+                                <strong>Reason:</strong> {{ item.why }}
                             </div>
                             
-                            <div class="grid grid-cols-3 gap-2 mt-auto">
-                                <a href="{{ item.ignore_link }}" class="btn-action col-span-3 mb-2 hover:!bg-white/10">Ignore Sender</a>
-                                <a href="{{ item.good_link }}" class="btn-action col-span-1.5 hover:!bg-emerald-500/20 hover:!text-emerald-400 !border !border-transparent hover:!border-emerald-500/30">Accurate</a>
-                                <a href="{{ item.wrong_link }}" class="btn-action col-span-1.5 hover:!bg-red-500/20 hover:!text-red-400 !border !border-transparent hover:!border-red-500/30">Wrong</a>
+                            <div class="grid grid-cols-2 gap-2 mt-auto">
+                                <a href="{{ item.ignore_link }}" class="btn-action col-span-2">Ignore Sender</a>
+                                <a href="{{ item.good_link }}" class="btn-action btn-primary">Accurate</a>
+                                <a href="{{ item.wrong_link }}" class="btn-action">Wrong</a>
                             </div>
                         </div>
                     </div>
@@ -498,23 +535,22 @@ def create_app():
             {% if digest.worth_a_look %}
             <div id="worth-look" class="mb-12">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="w-3 h-3 rounded-full bg-blue-500 shadow-[0_0_12px_#3b82f6]"></span>
-                    <h3 class="text-xl font-semibold text-white">Worth a Look</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-blue-500/20 to-transparent ml-4"></div>
+                    <span class="w-2.5 h-2.5 rounded-full color-look"></span>
+                    <h3 class="text-lg font-medium textMain">Worth a Look</h3>
                 </div>
                 
-                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
+                <div class="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-5">
                     {% for item in digest.worth_a_look %}
-                    <div class="dashboard-card">
+                    <div class="app-card">
                         <div class="p-6 flex-1 flex flex-col">
-                            <div class="text-xs font-semibold text-blue-400 uppercase tracking-wider mb-2">{{ item.from }}</div>
-                            <h4 class="text-lg font-semibold text-white mb-3">{{ item.subject }}</h4>
-                            <p class="text-sm text-gray-400 leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
+                            <div class="text-[10px] font-semibold textMuted uppercase tracking-wider mb-3">{{ item.from }}</div>
+                            <h4 class="text-base font-semibold textMain mb-2 leading-snug">{{ item.subject }}</h4>
+                            <p class="text-sm textMuted leading-relaxed mb-4 flex-1">{{ item.summary }}</p>
                             
-                            <div class="grid grid-cols-2 gap-2 mt-auto">
-                                <a href="{{ item.always_link }}" class="btn-action hover:!bg-blue-500/20 hover:!text-blue-400">Always Show</a>
-                                <a href="{{ item.ignore_link }}" class="btn-action hover:!bg-red-500/20 hover:!text-red-400">Ignore</a>
-                                <a href="{{ item.good_link }}" class="btn-action col-span-2 mt-2 hover:!bg-emerald-500/20 hover:!text-emerald-400">Accurate Match</a>
+                            <div class="grid grid-cols-2 gap-2 mt-auto pt-4 border-t border-border">
+                                <a href="{{ item.always_link }}" class="btn-action">Always Show</a>
+                                <a href="{{ item.ignore_link }}" class="btn-action">Ignore</a>
+                                <a href="{{ item.good_link }}" class="btn-action col-span-2 btn-primary mt-1">Accurate Classification</a>
                             </div>
                         </div>
                     </div>
@@ -526,21 +562,20 @@ def create_app():
             {% if digest.fyi %}
             <div id="fyi" class="mb-12">
                 <div class="flex items-center gap-3 mb-6">
-                    <span class="w-3 h-3 rounded-full bg-emerald-500 shadow-[0_0_12px_#10b981]"></span>
-                    <h3 class="text-xl font-semibold text-white">For Your Information</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-emerald-500/20 to-transparent ml-4"></div>
+                    <span class="w-2.5 h-2.5 rounded-full color-fyi"></span>
+                    <h3 class="text-lg font-medium textMain">For Your Information</h3>
                 </div>
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
                     {% for item in digest.fyi %}
-                    <div class="dashboard-card p-5">
-                        <div class="text-[10px] font-semibold text-emerald-500 uppercase tracking-wider mb-1 truncate">{{ item.from }}</div>
-                        <h4 class="text-base font-semibold text-white mb-2 line-clamp-1">{{ item.subject }}</h4>
-                        <p class="text-xs text-gray-400 leading-relaxed mb-4 line-clamp-3 flex-1">{{ item.summary }}</p>
+                    <div class="app-card p-5">
+                        <div class="text-[10px] font-semibold textMuted uppercase tracking-wider mb-2 truncate">{{ item.from }}</div>
+                        <h4 class="text-sm font-semibold textMain mb-2 line-clamp-1">{{ item.subject }}</h4>
+                        <p class="text-xs textMuted leading-relaxed mb-4 line-clamp-2 flex-1">{{ item.summary }}</p>
                         
-                        <div class="flex gap-2 mt-auto border-t border-white/5 pt-3">
-                            <a href="{{ item.always_link }}" class="text-[10px] font-medium text-gray-400 hover:text-white flex-1 text-center bg-white/5 py-1.5 rounded">Always</a>
-                            <a href="{{ item.ignore_link }}" class="text-[10px] font-medium text-gray-400 hover:text-red-400 flex-1 text-center bg-white/5 py-1.5 rounded">Ignore</a>
+                        <div class="flex gap-2 mt-auto border-t border-border pt-3">
+                            <a href="{{ item.always_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-bg py-1.5 rounded transition-colors">Always Show</a>
+                            <a href="{{ item.ignore_link }}" class="text-[10px] font-medium textMuted hover:textMain flex-1 text-center bg-bg py-1.5 rounded transition-colors">Ignore</a>
                         </div>
                     </div>
                     {% endfor %}
