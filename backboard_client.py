@@ -76,17 +76,20 @@ def parse_rules(memories: list[dict]) -> tuple[set[str], set[str]]:
 
 def save_digest_to_backboard(api_key: str, assistant_id: str, digest_data: dict):
     # Store snapshot as a memory for cross-container retrieval on Render free tier
-    try:
-        raw_json = json.dumps(digest_data)
-        if len(raw_json) > 3500:
-            import zlib, base64
-            content = "DIGEST_SNAPSHOT_Z:" + base64.b64encode(zlib.compress(raw_json.encode("utf-8"))).decode("ascii")
-        else:
-            content = "DIGEST_SNAPSHOT: " + raw_json
+    raw_json = json.dumps(digest_data)
+    if len(raw_json) > 3500:
+        import zlib, base64
+        content = "DIGEST_SNAPSHOT_Z:" + base64.b64encode(zlib.compress(raw_json.encode("utf-8"))).decode("ascii")
+    else:
+        content = "DIGEST_SNAPSHOT: " + raw_json
 
-        add_memory(api_key, assistant_id, content)
-        
-        # Cleanup old snapshots
+    if len(content) > 4000:
+        raise ValueError(f"Digest snapshot size ({len(content)} chars) exceeds Backboard memory limit of 4000 characters. Cannot persist digest.")
+
+    add_memory(api_key, assistant_id, content)
+    
+    # Cleanup old snapshots
+    try:
         mems = list_memories(api_key, assistant_id)
         snapshot_mems = [m for m in mems if m.get("content", "").startswith("DIGEST_SNAPSHOT: ") or m.get("content", "").startswith("DIGEST_SNAPSHOT_Z:")]
         # Sort descending by created_at, keep first
@@ -97,7 +100,7 @@ def save_digest_to_backboard(api_key: str, assistant_id: str, digest_data: dict)
             except Exception as e:
                 logger.warning(f"Failed to delete old snapshot {old_mem['id']}: {e}")
     except Exception as e:
-        logger.warning(f"Could not persist digest snapshot to Backboard: {e}")
+        logger.warning(f"Failed during old snapshot cleanup: {e}")
 
 def get_digest_from_backboard(api_key: str, assistant_id: str) -> dict | None:
     try:

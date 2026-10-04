@@ -2,6 +2,10 @@
 
 OneInbox is an intelligent, privacy-first daily email digest assistant powered by a fine-tuned Qwen3.5-4B model and persistent memory via Backboard.
 
+- 📄 **Sample Digest**: See [docs/sample_digest.md](docs/sample_digest.md) for a sample digest output.
+- 🤗 **Hugging Face Model**: [`<HF_USERNAME>/oneinbox-qwen3.5-4b-lora`](https://huggingface.co/<HF_USERNAME>/oneinbox-qwen3.5-4b-lora)
+- ⚠️ **Requirement**: Demo mode needs your own TINKER_API_KEY and a copy of the adapter weights.
+
 It categorizes incoming emails into four actionable tiers:
 - 🚨 **must_act**: Urgent action required (bills, critical deadlines, confirmations, security notices)
 - 💡 **worth_a_look**: High-value opportunities, meetups, beta releases, or personal notes
@@ -61,6 +65,8 @@ pip install -r requirements.txt
 ```
 
 ### 2. Run Daily Digest in Demo Mode
+> Demo mode needs your own TINKER_API_KEY and a copy of the adapter weights.
+
 ```bash
 # Preview digest summary counts
 python app.py --dry-run

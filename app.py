@@ -560,7 +560,11 @@ def create_app():
             pass
             
         if backboard_key and assistant_id:
-            save_digest_to_backboard(backboard_key, assistant_id, data)
+            try:
+                save_digest_to_backboard(backboard_key, assistant_id, data)
+            except Exception as e:
+                logger.error(f"Failed to persist digest snapshot to Backboard: {e}")
+                abort(500, f"Failed to persist digest snapshot to Backboard: {e}")
             
         return jsonify({"status": "OK"}), 200
 

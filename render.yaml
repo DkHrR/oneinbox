@@ -21,6 +21,8 @@ services:
         sync: false
       - key: INGEST_TOKEN
         sync: false
+      - key: PYTHON_VERSION
+        value: 3.14.3
 
   - type: cron
     name: oneinbox-daily-digest
@@ -50,3 +52,5 @@ services:
         sync: false
       - key: IMAP_PASS
         sync: false
+      - key: PYTHON_VERSION
+        value: 3.14.3
