@@ -3,13 +3,12 @@
 OneInbox is an intelligent, privacy-first daily email digest assistant powered by a fine-tuned Qwen3.5-4B model and persistent memory via Backboard.
 
 - 📄 **Sample Digest for Judges**: See [docs/sample_digest.md](docs/sample_digest.md) for a complete run output.
-- 🤗 **Hugging Face Model**: [`<HF_USERNAME>/oneinbox-qwen3.5-4b-lora`](https://huggingface.co/<HF_USERNAME>/oneinbox-qwen3.5-4b-lora)
-- ℹ️ **Demo Note**: The live demo uses the author's private Tinker checkpoint. Judges can read [docs/sample_digest.md](docs/sample_digest.md), and the adapter weights are on Hugging Face for self-hosting.
+- 🤗 **Hugging Face Model**: [`dKhRr/oneinbox-qwen3.5-4b-lora`](https://huggingface.co/dKhRr/oneinbox-qwen3.5-4b-lora)
 
 It categorizes incoming emails into four actionable tiers:
-- 🚨 **must_act**: Urgent action required (bills, critical deadlines, confirmations, security notices)
+- 🚨 **must_act**: Needs a reply or action, or has a deadline within 7 days (bills, deadlines, security alerts that ask you to verify)
 - 💡 **worth_a_look**: High-value opportunities, meetups, beta releases, or personal notes
-- ℹ️ **fyi**: Non-actionable informational updates (receipts, change password notices, closed tickets)
+- ℹ️ **fyi**: Receipts, confirmations, and status or security notices that need no action
 - 🔇 **noise**: Marketing blasts, promotions, newsletters, and social clutter
 
 ---
@@ -43,6 +42,7 @@ Configure these in `.env` (or in the Render dashboard for cloud deployment):
 | `BACKBOARD_API_KEY` | API key for Backboard assistant memory storage. |
 | `BACKBOARD_ASSISTANT_ID` | Assistant ID for OneInbox on Backboard. |
 | `DIGEST_TOKEN` | Secret URL token required to access `/digest?token=...`. |
+| `INGEST_TOKEN` | Secret authorization token used by the cron job to POST the digest to the web service. |
 | `FEEDBACK_SECRET` | HMAC secret key used to sign and verify feedback links. |
 | `APP_BASE_URL` | Base URL of the web service (e.g. `http://localhost:5000` or `https://oneinbox.onrender.com`). |
 | `IMAP_HOST` | *(Optional for IMAP mode)* e.g. `imap.gmail.com`. |
@@ -92,15 +92,17 @@ python app.py --imap --dry-run
 2. **Cron Job** (`oneinbox-daily-digest`): Runs `python app.py` daily at 01:30 UTC (07:00 IST).
 
 ### Storage Design: Shared State across Render Containers
-- On Render's free tier, Web Services and Cron Jobs run in isolated ephemeral containers and cannot share a local filesystem.
+- Web Services and Cron Jobs run in isolated ephemeral containers and cannot share a local filesystem.
+- **Render Pricing**: The web service runs on the free plan, but Render cron jobs require the starter plan ($1/month minimum per cron job; Render has no free cron).
 - Furthermore, Render free web services spin down after 15 minutes of inactivity.
-- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the cron job finishes, it persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard. This utilizes Render's $50 free credit for compute, while Backboard's free tier covers our memory needs, avoiding paid Render persistent disks.
+- **Why Backboard?**: Backboard acts as the central, persistent memory and state layer. When the cron job finishes, it persists rules and digest metadata directly to Backboard. When the web service wakes up, it fetches the state from Backboard. This utilizes Render's $50 credit for compute, while Backboard's free tier covers our memory needs, avoiding paid Render persistent disks.
 
 ---
 
 ## Privacy Notes
 
 - **No Third-Party Notification Service**: No third-party notification service is used. The digest is read exclusively on a token-protected page (`/digest?token=...`). A push notification could be added later.
+- **Digest Snapshot Storage**: The digest snapshot (sender, subject, label, deadline, summary, reason, never email bodies) is stored in Backboard memory so the web service can read it.
 - **Never Logged**: Raw email bodies, full headers, and API keys are never printed to stdout/stderr or written to version control.
 - **Strict Read-Only IMAP**: IMAP connections use `mail.select("INBOX", readonly=True)`, preventing any modification, flagging, or deletion of user emails.
 - **Pre-Model Redaction**: PII (phone numbers, OTP codes, card/account numbers, and external URLs) is stripped before prompt assembly.

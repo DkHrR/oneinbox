@@ -50,7 +50,9 @@ def main():
             repo_type="model"
         )
 
-    print(f"Successfully uploaded adapter to https://huggingface.co/{repo_id}")
+    print(f"Repo URL: https://huggingface.co/{repo_id}")
+    files = api.list_repo_files(repo_id=repo_id, repo_type="model")
+    print(f"Files in repo: {files}")
 
 if __name__ == "__main__":
     main()
