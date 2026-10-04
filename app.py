@@ -305,300 +305,340 @@ def create_app():
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OneInbox | Intelligence Digest</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>OneInbox</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg-main: #fdfbf7;
+            --bg: #fafaf9;
+            --card: #ffffff;
+            --tx-main: #1c1917;
+            --tx-muted: #78716c;
+            --border-subtle: #e7e5e4;
+            --act-accent: #ef4444;
+            --look-accent: #6366f1;
+            --fyi-accent: #10b981;
+            --btn-text: #44403c;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            :root {
+                --bg: #0c0a09;
+                --card: #1c1917;
+                --tx-main: #f5f5f4;
+                --tx-muted: #a8a29e;
+                --border-subtle: #292524;
+                --btn-text: #d6d3d1;
+            }
         }
 
         body {
-            font-family: 'Outfit', sans-serif;
-            background-color: var(--bg-main);
-            background-image: radial-gradient(circle at 100% 0%, #fef3c7 0%, transparent 25%),
-                              radial-gradient(circle at 0% 100%, #e0e7ff 0%, transparent 25%);
-            background-attachment: fixed;
-            color: #1e293b;
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg);
+            color: var(--tx-main);
             -webkit-font-smoothing: antialiased;
+            margin: 0;
+            padding: 0;
+            padding-bottom: 80px;
         }
 
-        ::-webkit-scrollbar { width: 8px; height: 8px; }
-        ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
+        a { text-decoration: none; color: inherit; }
 
-        /* Enhanced Cards */
-        .card-urgent {
-            background: linear-gradient(145deg, #fff1f2 0%, #fff 100%);
-            border: 1px solid #fecdd3;
-            box-shadow: 0 4px 20px -2px rgba(225, 29, 72, 0.08);
+        /* Typography Utilities */
+        .text-sm { font-size: 0.875rem; line-height: 1.25rem; }
+        .text-xs { font-size: 0.75rem; line-height: 1rem; }
+        .text-base { font-size: 1rem; line-height: 1.5rem; }
+        .text-2xl { font-size: 1.5rem; line-height: 2rem; }
+        .font-semibold { font-weight: 600; }
+        .text-muted { color: var(--tx-muted); }
+        .uppercase { text-transform: uppercase; }
+        .tracking-wide { letter-spacing: 0.025em; }
+
+        /* Layout & Spacing */
+        .max-w-container {
+            max-width: 760px;
+            margin-left: auto;
+            margin-right: auto;
+            padding-left: 16px;
+            padding-right: 16px;
         }
-        .card-urgent:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px -4px rgba(225, 29, 72, 0.15);
-            border-color: #fda4af;
+        .mb-1 { margin-bottom: 0.25rem; }
+        .mb-2 { margin-bottom: 0.5rem; }
+        .mb-3 { margin-bottom: 0.75rem; }
+        .mb-4 { margin-bottom: 1rem; }
+        .mb-8 { margin-bottom: 2rem; }
+        .mb-10 { margin-bottom: 2.5rem; }
+        .mt-1 { margin-top: 0.25rem; }
+        .pt-8 { padding-top: 2rem; }
+        .p-3 { padding: 0.75rem; }
+        .p-4 { padding: 1rem; }
+        
+        .flex { display: flex; }
+        .items-center { align-items: center; }
+        .items-start { align-items: flex-start; }
+        .justify-center { justify-content: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-1 { gap: 0.25rem; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .flex-wrap { flex-wrap: wrap; }
+        .shrink-0 { flex-shrink: 0; }
+        .space-y-2 > * + * { margin-top: 0.5rem; }
+        .space-y-3 > * + * { margin-top: 0.75rem; }
+        .space-y-4 > * + * { margin-top: 1rem; }
+        .-ml-3 { margin-left: -0.75rem; }
+        
+        /* Truncation */
+        .text-truncate {
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            max-width: 100%;
+        }
+        .truncate-container {
+            min-width: 0;
+        }
+        .line-clamp-3 {
+            display: -webkit-box;
+            -webkit-line-clamp: 3;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
         }
 
-        .card-look {
-            background: linear-gradient(145deg, #eff6ff 0%, #fff 100%);
-            border: 1px solid #bfdbfe;
-            box-shadow: 0 4px 20px -2px rgba(59, 130, 246, 0.08);
-        }
-        .card-look:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px -4px rgba(59, 130, 246, 0.15);
-            border-color: #93c5fd;
-        }
-
-        .card-fyi {
-            background: linear-gradient(145deg, #f0fdfa 0%, #fff 100%);
-            border: 1px solid #a7f3d0;
-            box-shadow: 0 4px 20px -2px rgba(16, 185, 129, 0.08);
-        }
-        .card-fyi:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 12px 30px -4px rgba(16, 185, 129, 0.15);
-            border-color: #6ee7b7;
-        }
-
-        .app-card {
-            border-radius: 24px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Action Header Responsiveness */
+        .action-header {
             display: flex;
-            flex-direction: column;
-            height: 100%;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 1rem;
+        }
+        @media (max-width: 479px) {
+            .action-header {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
         }
 
-        /* Fixed & Enhanced Buttons */
-        .btn-core {
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 10px 16px;
-            border-radius: 12px;
-            transition: all 0.2s;
-            text-align: center;
-            display: flex;
+        /* Nav */
+        .sticky-nav {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background-color: rgba(250, 250, 249, 0.9);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border-subtle);
+        }
+        @media (prefers-color-scheme: dark) {
+            .sticky-nav { background-color: rgba(12, 10, 9, 0.9); }
+        }
+        .nav-link { transition: color 0.2s; }
+        .nav-link:hover { color: var(--look-accent); }
+
+        /* Cards */
+        .card {
+            background-color: var(--card);
+            border: 1px solid var(--border-subtle);
+            border-left-width: 0;
+            border-radius: 0 6px 6px 0;
+            box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        }
+        .card-act { border-left: 3px solid var(--act-accent); }
+        .card-look { border-left: 3px solid var(--look-accent); }
+        .card-fyi { border-left: 3px solid var(--fyi-accent); }
+
+        .demo-notice {
+            border: 1px solid var(--border-subtle);
+            border-radius: 6px;
+            background-color: var(--card);
+            display: inline-block;
+            padding: 8px 12px;
+        }
+
+        /* Chips */
+        .chip-danger {
+            background-color: #fee2e2;
+            color: #b91c1c;
+            padding: 2px 8px;
+            border-radius: 4px;
+        }
+        @media (prefers-color-scheme: dark) {
+            .chip-danger { background-color: rgba(127, 29, 29, 0.3); color: #f87171; }
+        }
+
+        /* Buttons */
+        .ghost-btn {
+            font-size: 0.875rem;
+            color: var(--btn-text);
+            background: transparent;
+            min-height: 40px;
+            display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 6px;
+            padding: 0 12px;
+            border-radius: 6px;
+            transition: color 0.15s, background-color 0.15s, border-color 0.15s;
+            border: 1px solid var(--border-subtle);
             cursor: pointer;
+            margin-left: 0.75rem; /* Re-distribute space */
         }
+        .ghost-btn-good:hover { color: #10b981; background: rgba(16, 185, 129, 0.1); border-color: rgba(16, 185, 129, 0.3); }
+        .ghost-btn-bad:hover { color: #ef4444; background: rgba(239, 68, 68, 0.1); border-color: rgba(239, 68, 68, 0.3); }
+        .ghost-btn-neutral:hover { color: var(--tx-main); background: var(--border-subtle); }
         
-        .btn-silence { background: white; color: #64748b; border: 1px solid #e2e8f0; }
-        .btn-silence:hover { background: #f1f5f9; color: #0f172a; border-color: #cbd5e1; }
-
-        .btn-good { background: #ecfdf5; color: #059669; border: 1px solid #a7f3d0; }
-        .btn-good:hover { background: #10b981; color: white; border-color: #10b981; box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2); }
-
-        .btn-wrong { background: #fff1f2; color: #e11d48; border: 1px solid #fecdd3; }
-        .btn-wrong:hover { background: #e11d48; color: white; border-color: #e11d48; box-shadow: 0 4px 12px rgba(225, 29, 72, 0.2); }
-
-        .btn-always { background: #eff6ff; color: #2563eb; border: 1px solid #bfdbfe; }
-        .btn-always:hover { background: #2563eb; color: white; border-color: #2563eb; box-shadow: 0 4px 12px rgba(37, 99, 235, 0.2); }
-
-        /* Sidebar Pattern */
-        .sidebar-bg {
-            background-color: #0f172a;
-            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        .buttons-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.25rem;
+            margin-left: -0.75rem; 
         }
     </style>
 </head>
-<body class="flex h-screen overflow-hidden">
+<body>
 
-    <!-- Premium Sidebar with subtle pattern -->
-    <aside class="w-72 sidebar-bg text-white flex flex-col h-full hidden md:flex shrink-0 shadow-[4px_0_24px_rgba(0,0,0,0.1)] z-20 relative">
-        <div class="absolute top-0 left-0 w-full h-1.5 bg-gradient-to-r from-rose-500 via-blue-500 to-emerald-500"></div>
-        
-        <div class="p-8 pb-6">
-            <h1 class="text-3xl font-extrabold tracking-tight mb-1">OneInbox<span class="text-blue-500">.</span></h1>
-            <div class="text-[11px] text-slate-400 font-bold tracking-widest uppercase">Intelligence Digest</div>
+    <!-- Compact Sticky Summary Strip -->
+    <nav class="sticky-nav">
+        <div class="max-w-container py-3 flex items-center justify-center gap-2 text-sm font-semibold flex-wrap">
+            {% if digest.must_act %}
+            <a href="#action" class="nav-link">{{ digest.must_act|length }} need action</a>
+            {% endif %}
+            
+            {% if digest.must_act and (digest.worth_a_look or digest.fyi) %}
+            <span class="text-muted">·</span>
+            {% endif %}
+            
+            {% if digest.worth_a_look %}
+            <a href="#look" class="nav-link">{{ digest.worth_a_look|length }} worth a look</a>
+            {% endif %}
+            
+            {% if digest.worth_a_look and digest.fyi %}
+            <span class="text-muted">·</span>
+            {% endif %}
+            
+            {% if digest.fyi %}
+            <a href="#fyi" class="nav-link">{{ digest.fyi|length }} FYI</a>
+            {% endif %}
         </div>
-        
-        <nav class="flex-1 px-5 space-y-3 overflow-y-auto mt-6">
-            <div class="text-[10px] uppercase tracking-widest text-slate-500 font-bold px-3 mb-2">Filters</div>
-            
-            <a href="#action-required" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 font-semibold hover:bg-white/10 hover:text-white transition-all group">
-                <div class="w-2.5 h-2.5 rounded-full bg-rose-500 shadow-[0_0_8px_rgba(244,63,94,0.6)] group-hover:scale-125 transition-transform"></div>
-                Action Required
-                <span class="ml-auto text-[11px] bg-rose-500/20 text-rose-300 font-bold px-2 py-0.5 rounded-md">{{ digest.must_act|length }}</span>
-            </a>
-            
-            <a href="#worth-look" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 font-semibold hover:bg-white/10 hover:text-white transition-all group">
-                <div class="w-2.5 h-2.5 rounded-full bg-blue-500 shadow-[0_0_8px_rgba(59,130,246,0.6)] group-hover:scale-125 transition-transform"></div>
-                Worth a Look
-                <span class="ml-auto text-[11px] bg-blue-500/20 text-blue-300 font-bold px-2 py-0.5 rounded-md">{{ digest.worth_a_look|length }}</span>
-            </a>
-            
-            <a href="#fyi" class="flex items-center gap-3 px-3 py-2.5 rounded-xl text-slate-300 font-semibold hover:bg-white/10 hover:text-white transition-all group">
-                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(16,185,129,0.6)] group-hover:scale-125 transition-transform"></div>
-                For Your Info
-                <span class="ml-auto text-[11px] bg-emerald-500/20 text-emerald-300 font-bold px-2 py-0.5 rounded-md">{{ digest.fyi|length }}</span>
-            </a>
-        </nav>
+    </nav>
 
-        <div class="p-8 border-t border-slate-800 bg-slate-900/50">
-            <div class="flex items-center gap-4">
-                <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-blue-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-indigo-500/20">
-                    <svg class="w-5 h-5 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path></svg>
-                </div>
-                <div>
-                    <div class="text-sm font-bold text-white">Backboard</div>
-                    <div class="text-[10px] text-indigo-400 font-bold tracking-wide uppercase mt-0.5">Memory Engine Sync</div>
-                </div>
-            </div>
-        </div>
-    </aside>
-
-    <!-- Main Content Area -->
-    <main class="flex-1 flex flex-col h-full overflow-hidden relative">
+    <main class="max-w-container pt-8">
         
         <!-- Header -->
-        <header class="h-24 bg-white/60 backdrop-blur-xl border-b border-slate-200/60 flex items-center justify-between px-10 shrink-0 z-10 sticky top-0 shadow-[0_4px_30px_rgba(0,0,0,0.02)]">
-            <div>
-                <h2 class="text-2xl font-extrabold text-slate-800 tracking-tight">Good morning.</h2>
-                <div class="text-xs font-semibold text-slate-500 mt-1 flex items-center gap-2">
-                    <svg class="w-3.5 h-3.5 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Generated {{ digest.generated_at }}
-                </div>
-            </div>
-            <div class="px-5 py-2.5 rounded-2xl bg-white border border-slate-200 shadow-sm text-sm font-bold text-slate-700 flex items-center gap-3">
-                <div class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></div>
-                {{ digest.total_count }} Emails Analyzed
-            </div>
+        <header class="mb-8">
+            <h1 class="text-2xl font-semibold mb-1">Good morning.</h1>
+            <p class="text-sm text-muted">Updated {{ digest.generated_at }}</p>
         </header>
 
-        <!-- Scrollable Grid Area -->
-        <div class="flex-1 overflow-y-auto p-8 lg:p-12 scroll-smooth">
-            
-            {% if digest.mode == 'Demo (Sample Emails)' %}
-            <div class="mb-10 bg-amber-50 border border-amber-200 rounded-2xl p-4 text-amber-700 text-sm font-bold flex items-center gap-3 shadow-sm max-w-max mx-auto">
-                <svg class="w-5 h-5 text-amber-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"></path></svg>
-                Demo Mode: Viewing synthetic archived sample emails.
-            </div>
-            {% endif %}
-
-            {% if digest.must_act %}
-            <div id="action-required" class="mb-16">
-                <div class="flex items-center gap-4 mb-8">
-                    <h3 class="text-2xl font-extrabold text-rose-600 tracking-tight">Action Required</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-rose-200 to-transparent"></div>
-                </div>
-                
-                <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8">
-                    {% for item in digest.must_act %}
-                    <div class="app-card card-urgent">
-                        <div class="p-8 flex-1 flex flex-col">
-                            <div class="flex justify-between items-start mb-5">
-                                <div class="text-[10px] font-bold text-rose-500 uppercase tracking-widest bg-white/80 border border-rose-100 px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5">
-                                    <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                    {{ item.from }}
-                                </div>
-                            </div>
-                            
-                            <h4 class="text-xl font-bold text-slate-900 mb-3 leading-snug">{{ item.subject }}</h4>
-                            
-                            {% if item.deadline %}
-                            <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-rose-500 text-white text-[11px] font-bold mb-4 shadow-sm shadow-rose-500/20 w-max">
-                                <svg class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                                Due: {{ item.deadline }}
-                            </div>
-                            {% endif %}
-                            
-                            <p class="text-sm font-medium text-slate-700 leading-relaxed mb-6 flex-1">{{ item.summary }}</p>
-                            
-                            <!-- AI Insight Bubble -->
-                            <div class="bg-white/80 border border-rose-100 p-4 rounded-2xl mb-8 flex gap-3 items-start shadow-sm">
-                                <div class="w-6 h-6 rounded-full bg-rose-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <svg class="w-3 h-3 text-rose-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A12.014 12.014 0 0010.326 2h-.652c-.69 0-1.36.14-1.99.39A10.022 10.022 0 004.5 5.5v1.28c0 .28-.11.55-.31.75L2.73 8.98a1.5 1.5 0 00.1 2.22l1.65 1.34c.15.12.23.3.23.49v1.27a10.016 10.016 0 002.59 6.8c.84.84 1.95 1.43 3.16 1.7.35.08.72.12 1.1.12h.88c.38 0 .75-.04 1.1-.12 1.21-.27 2.32-.86 3.16-1.7a10.016 10.016 0 002.59-6.8v-1.27c0-.19.08-.37.23-.49l1.65-1.34a1.5 1.5 0 00.1-2.22l-1.46-1.45a1.05 1.05 0 01-.31-.75V5.5a10.022 10.022 0 00-3.18-3.11 12.014 12.014 0 00-.974-.954A2.003 2.003 0 0011.3 1.046zM10 4a1 1 0 011 1v3a1 1 0 11-2 0V5a1 1 0 011-1zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-bold text-rose-500 uppercase tracking-wider mb-0.5">AI Inference</div>
-                                    <div class="text-xs font-semibold text-slate-800 leading-snug">{{ item.why }}</div>
-                                </div>
-                            </div>
-                            
-                            <!-- Action Buttons -->
-                            <div class="flex flex-wrap items-center gap-3">
-                                <a href="{{ item.ignore_link }}" class="btn-core btn-silence flex-1 shrink-0">Silence Sender</a>
-                                <a href="{{ item.good_link }}" class="btn-core btn-good flex-1">Accurate ✓</a>
-                                <a href="{{ item.wrong_link }}" class="btn-core btn-wrong flex-1">Wrong ✕</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-            {% if digest.worth_a_look %}
-            <div id="worth-look" class="mb-16">
-                <div class="flex items-center gap-4 mb-8">
-                    <h3 class="text-2xl font-extrabold text-blue-600 tracking-tight">Worth a Look</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-blue-200 to-transparent"></div>
-                </div>
-                
-                <div class="grid grid-cols-1 xl:grid-cols-2 2xl:grid-cols-3 gap-8">
-                    {% for item in digest.worth_a_look %}
-                    <div class="app-card card-look">
-                        <div class="p-8 flex-1 flex flex-col">
-                            <div class="text-[10px] font-bold text-blue-500 uppercase tracking-widest bg-white/80 border border-blue-100 px-3 py-1.5 rounded-full shadow-sm flex items-center gap-1.5 w-max mb-5">
-                                <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                                {{ item.from }}
-                            </div>
-                            
-                            <h4 class="text-xl font-bold text-slate-900 mb-3 leading-snug">{{ item.subject }}</h4>
-                            <p class="text-sm font-medium text-slate-700 leading-relaxed mb-6 flex-1">{{ item.summary }}</p>
-                            
-                             <div class="bg-white/80 border border-blue-100 p-4 rounded-2xl mb-8 flex gap-3 items-start shadow-sm">
-                                <div class="w-6 h-6 rounded-full bg-blue-100 flex items-center justify-center shrink-0 mt-0.5">
-                                    <svg class="w-3 h-3 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M11.3 1.046A12.014 12.014 0 0010.326 2h-.652c-.69 0-1.36.14-1.99.39A10.022 10.022 0 004.5 5.5v1.28c0 .28-.11.55-.31.75L2.73 8.98a1.5 1.5 0 00.1 2.22l1.65 1.34c.15.12.23.3.23.49v1.27a10.016 10.016 0 002.59 6.8c.84.84 1.95 1.43 3.16 1.7.35.08.72.12 1.1.12h.88c.38 0 .75-.04 1.1-.12 1.21-.27 2.32-.86 3.16-1.7a10.016 10.016 0 002.59-6.8v-1.27c0-.19.08-.37.23-.49l1.65-1.34a1.5 1.5 0 00.1-2.22l-1.46-1.45a1.05 1.05 0 01-.31-.75V5.5a10.022 10.022 0 00-3.18-3.11 12.014 12.014 0 00-.974-.954A2.003 2.003 0 0011.3 1.046zM10 4a1 1 0 011 1v3a1 1 0 11-2 0V5a1 1 0 011-1zm0 9a1 1 0 100-2 1 1 0 000 2z" clip-rule="evenodd"></path></svg>
-                                </div>
-                                <div>
-                                    <div class="text-[10px] font-bold text-blue-500 uppercase tracking-wider mb-0.5">AI Inference</div>
-                                    <div class="text-xs font-semibold text-slate-800 leading-snug">{{ item.why }}</div>
-                                </div>
-                            </div>
-                            
-                            <div class="grid grid-cols-2 gap-3 mt-auto">
-                                <a href="{{ item.always_link }}" class="btn-core btn-always col-span-2">Always Show This Content</a>
-                                <a href="{{ item.ignore_link }}" class="btn-core btn-silence">Silence Sender</a>
-                                <a href="{{ item.good_link }}" class="btn-core btn-good">Accurate ✓</a>
-                            </div>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
-            {% if digest.fyi %}
-            <div id="fyi" class="mb-16">
-                <div class="flex items-center gap-4 mb-8">
-                    <h3 class="text-2xl font-extrabold text-emerald-600 tracking-tight">For Your Information</h3>
-                    <div class="h-px flex-1 bg-gradient-to-r from-emerald-200 to-transparent"></div>
-                </div>
-                
-                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    {% for item in digest.fyi %}
-                    <div class="app-card card-fyi p-6">
-                        <div class="text-[10px] font-bold text-emerald-600 uppercase tracking-widest mb-3 truncate flex items-center gap-1.5 bg-white/80 w-max px-2.5 py-1 rounded-full shadow-sm border border-emerald-100">
-                            <svg class="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
-                            {{ item.from }}
-                        </div>
-                        <h4 class="text-base font-bold text-slate-900 mb-2 line-clamp-1">{{ item.subject }}</h4>
-                        <p class="text-xs font-medium text-slate-600 leading-relaxed mb-6 flex-1 line-clamp-3">{{ item.summary }}</p>
-                        
-                        <div class="flex gap-2 mt-auto">
-                            <a href="{{ item.always_link }}" class="btn-core btn-always flex-1 !text-[10px] !py-2 !px-2">Always</a>
-                            <a href="{{ item.ignore_link }}" class="btn-core btn-silence flex-1 !text-[10px] !py-2 !px-2">Ignore</a>
-                        </div>
-                    </div>
-                    {% endfor %}
-                </div>
-            </div>
-            {% endif %}
-
+        {% if digest.mode == 'Demo (Sample Emails)' %}
+        <div class="mb-8 demo-notice text-sm text-muted">
+            Demo Mode: synthetic sample emails
         </div>
+        {% endif %}
+
+        <!-- Pinned Section -->
+        {% if digest.pinned %}
+        <section id="pinned" class="mb-10">
+            <h2 class="text-sm font-semibold text-muted uppercase tracking-wide mb-3">Pinned</h2>
+            <div class="space-y-3">
+                {% for item in digest.pinned %}
+                <div class="card card-fyi p-4 truncate-container">
+                    <div class="text-xs text-muted mb-1 text-truncate" title="{{ item.from }}">
+                        {{ item.from.split('<')[0]|trim }}
+                    </div>
+                    <div class="font-semibold text-base mb-1 text-truncate">{{ item.subject }}</div>
+                    <div class="text-sm text-muted text-truncate">{{ item.summary }}</div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Action Required -->
+        {% if digest.must_act %}
+        <section id="action" class="mb-10">
+            <h2 class="text-sm font-semibold text-muted uppercase tracking-wide mb-3">Action Required</h2>
+            <div class="space-y-4">
+                {% for item in digest.must_act %}
+                <div class="card card-act p-4 truncate-container">
+                    <div class="action-header mb-2">
+                        <div class="text-xs text-muted text-truncate" title="{{ item.from }}">
+                            {{ item.from.split('<')[0]|trim }}
+                        </div>
+                        {% if item.deadline %}
+                        <div class="shrink-0 chip-danger text-xs font-semibold">
+                            Due: {{ item.deadline }}
+                        </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="font-semibold text-base mb-2 line-clamp-3">{{ item.subject }}</div>
+                    <div class="text-sm mb-3">{{ item.summary }}</div>
+                    
+                    {% if item.why and item.why != item.summary %}
+                    <div class="text-sm text-muted mb-4 text-truncate">Why: {{ item.why }}</div>
+                    {% endif %}
+                    
+                    <div class="buttons-row">
+                        <a href="{{ item.good_link }}" class="ghost-btn ghost-btn-good">Accurate</a>
+                        <a href="{{ item.wrong_link }}" class="ghost-btn ghost-btn-bad">Wrong</a>
+                        <a href="{{ item.ignore_link }}" class="ghost-btn ghost-btn-neutral">Silence sender</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- Worth a Look (Compact Rows) -->
+        {% if digest.worth_a_look %}
+        <section id="look" class="mb-10">
+            <h2 class="text-sm font-semibold text-muted uppercase tracking-wide mb-3">Worth a Look</h2>
+            <div class="space-y-2">
+                {% for item in digest.worth_a_look %}
+                <div class="card card-look p-3 truncate-container">
+                    <div class="text-xs text-muted mb-1 text-truncate" title="{{ item.from }}">
+                        {{ item.from.split('<')[0]|trim }}
+                    </div>
+                    <div class="font-semibold text-sm mb-1 text-truncate">{{ item.subject }}</div>
+                    <div class="text-sm text-muted mb-2 text-truncate">{{ item.summary }}</div>
+                    
+                    {% if item.why and item.why != item.summary %}
+                    <div class="text-xs text-muted mb-2 text-truncate">Why: {{ item.why }}</div>
+                    {% endif %}
+                    
+                    <div class="buttons-row">
+                        <a href="{{ item.good_link }}" class="ghost-btn ghost-btn-good">Accurate</a>
+                        <a href="{{ item.ignore_link }}" class="ghost-btn ghost-btn-neutral">Silence sender</a>
+                        <a href="{{ item.always_link }}" class="ghost-btn ghost-btn-neutral">Always show</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
+        <!-- FYI (Compact Rows) -->
+        {% if digest.fyi %}
+        <section id="fyi" class="mb-10">
+            <h2 class="text-sm font-semibold text-muted uppercase tracking-wide mb-3">For Your Information</h2>
+            <div class="space-y-2">
+                {% for item in digest.fyi %}
+                <div class="card card-fyi p-3 truncate-container">
+                    <div class="text-xs text-muted mb-1 text-truncate" title="{{ item.from }}">
+                        {{ item.from.split('<')[0]|trim }}
+                    </div>
+                    <div class="font-semibold text-sm mb-1 text-truncate">{{ item.subject }}</div>
+                    <div class="text-sm text-muted mb-2 text-truncate">{{ item.summary }}</div>
+                    
+                    <div class="buttons-row">
+                        <a href="{{ item.always_link }}" class="ghost-btn ghost-btn-neutral">Always show</a>
+                        <a href="{{ item.ignore_link }}" class="ghost-btn ghost-btn-neutral">Silence sender</a>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </section>
+        {% endif %}
+
     </main>
 </body>
 </html>"""
