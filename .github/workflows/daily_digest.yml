@@ -1,0 +1,35 @@
+name: OneInbox Daily Digest
+
+on:
+  schedule:
+    - cron: '30 1 * * *' # Runs at 01:30 UTC daily
+  workflow_dispatch: # Allows manual trigger from GitHub UI
+
+jobs:
+  run-digest:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+          cache: 'pip'
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Run Daily Digest
+        env:
+          TINKER_API_KEY: ${{ secrets.TINKER_API_KEY }}
+          BACKBOARD_API_KEY: ${{ secrets.BACKBOARD_API_KEY }}
+          BACKBOARD_ASSISTANT_ID: ${{ secrets.BACKBOARD_ASSISTANT_ID }}
+          APP_BASE_URL: ${{ secrets.APP_BASE_URL }}
+          INGEST_TOKEN: ${{ secrets.INGEST_TOKEN }}
+          IMAP_HOST: ${{ secrets.IMAP_HOST }}
+          IMAP_USER: ${{ secrets.IMAP_USER }}
+          IMAP_PASS: ${{ secrets.IMAP_PASS }}
+        run: |
+          python app.py
