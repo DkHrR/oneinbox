@@ -4,3 +4,4 @@ requests
 numpy
 flask
 gunicorn
+huggingface_hub

@@ -13,3 +13,7 @@ data/dummy_real*
 data/old_dummy_test.jsonl
 data/train_conversations.jsonl
 weights/
+digest_preview.md
+latest_digest.json
+results_partial.md
+data/eval_predictions_partial.jsonl
